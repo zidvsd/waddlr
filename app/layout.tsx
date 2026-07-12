@@ -1,14 +1,17 @@
-import { Geist, Geist_Mono, Inter } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils";
+import { Inter, Fraunces } from "next/font/google"
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'})
-
-const fontMono = Geist_Mono({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-inter",
+})
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
 })
 
 export default function RootLayout({
@@ -17,11 +20,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", inter.variable)}
-    >
+   <html
+  lang="en"
+  suppressHydrationWarning
+  className={cn(
+    "antialiased",
+    "font-sans",
+    inter.variable,
+    fraunces.variable
+  )}
+>
       <body>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
