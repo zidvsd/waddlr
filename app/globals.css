@@ -215,6 +215,9 @@
     @apply font-sans;
   }
 
+  section {
+    @apply container mx-auto;
+  }
 
 }
 

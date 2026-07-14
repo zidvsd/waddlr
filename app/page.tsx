@@ -11,7 +11,7 @@ import { ThemeShowcase } from "@/components/sections/landing-page/themes"
 
 export function LandingPage() {
   return (
-    <div className="container mx-auto min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground">
       <Nav />
       <Hero />
       <Logos />
