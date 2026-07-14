@@ -2,7 +2,7 @@ const STEPS = [
   {
     number: "01",
     title: "Create your organization",
-    body: "Claim your handle — clubly.app/your-org — in seconds.",
+    body: "Claim your handle — waddlr.app/your-org — in seconds.",
   },
   {
     number: "02",

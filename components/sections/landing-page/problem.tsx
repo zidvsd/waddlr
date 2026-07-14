@@ -40,7 +40,7 @@ export function Problem() {
         <div className="relative">
           <div className="sticky top-32">
             <span className="text-xs font-medium tracking-widest text-primary uppercase">
-              The Clubly way
+              The Waddlr way
             </span>
             <h3 className="mt-3 text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
               One organized <span className="text-gradient-brand">home.</span>
@@ -54,7 +54,7 @@ export function Problem() {
               <div className="rounded-[calc(1.5rem-4px)] bg-card p-6">
                 <div className="flex items-center gap-3">
                   <LogoMark />
-                  <span className="font-semibold text-foreground">Clubly</span>
+                  <span className="font-semibold text-foreground">Waddlr</span>
                 </div>
                 <div className="mt-5 space-y-2">
                   {[

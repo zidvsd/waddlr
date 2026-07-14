@@ -3,7 +3,6 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils";
 import { Inter, Fraunces } from "next/font/google"
-
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",

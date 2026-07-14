@@ -47,7 +47,7 @@ export function Hero() {
           <div className="surface-card overflow-hidden rounded-3xl">
             <img
               src="https://placehold.co/600x400"
-              alt="Clubly organization portal for Computer Society"
+              alt="Waddlr organization portal for Computer Society"
               width={1600}
               height={1200}
               className="h-auto w-full"

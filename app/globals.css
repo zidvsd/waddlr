@@ -17,7 +17,6 @@
   /* Typography roles */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
-
   /* Brand colors -> generates bg-sunbeam, text-violet, border-sky, ring-mist, etc. */
   --color-sunbeam: var(--sunbeam);
   --color-sunbeam-foreground: var(--sunbeam-foreground);
@@ -215,10 +214,6 @@
     @apply font-sans;
   }
 
-  section {
-    @apply container mx-auto;
-  }
-
 }
 
 /*
@@ -282,4 +277,8 @@
   .text-data {
     @apply font-mono tabular-nums;
   }
+}
+  ::view-transition-old(root), ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
 }

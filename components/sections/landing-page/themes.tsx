@@ -96,7 +96,7 @@ function ThemeCard({ theme }: { theme: (typeof THEMES)[number] }) {
             {theme.org}
           </div>
           <div className="mt-1 text-sm opacity-70">
-            clubly.app/{theme.org.toLowerCase().replace(/\s+/g, "-")}
+            waddlr.app/{theme.org.toLowerCase().replace(/\s+/g, "-")}
           </div>
         </div>
         <div className="mt-6 flex gap-2">

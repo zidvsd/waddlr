@@ -14,7 +14,7 @@ export function FinalCta() {
             <br /> experience.
           </h2>
           <p className="relative mx-auto mt-5 max-w-xl text-lg text-background/70">
-            Join the first cohort of student organizations running on Clubly.
+            Join the first cohort of student organizations running on Waddlr.
           </p>
           <div className="relative mt-8 flex flex-wrap items-center justify-center gap-3">
             <a
