@@ -4,9 +4,9 @@ import { relations } from "drizzle-orm"
 import { user } from "./auth"
 
 export const organizationRoleEnum = pgEnum("organization_role", [
-  "member",
-  "officer",
   "organization_admin",
+  "officer",
+  "member",
 ])
 
 export const organization = pgTable(
