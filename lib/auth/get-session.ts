@@ -6,5 +6,5 @@ export async function getServerSession() {
   const session = await auth.api.getSession({
     headers: await headers(),
   })
-  return session // null if not signed in, otherwise { user, session }
+  return session 
 }
