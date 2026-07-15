@@ -26,8 +26,13 @@ export function LogoutButton() {
   }
 
   return (
-    <Button variant="outline" onClick={handleLogout} disabled={loading}>
-      <LogOut className="mr-2 size-4" />
+    <Button
+      variant="destructive"
+      className={"flex items-center gap-2"}
+      onClick={handleLogout}
+      disabled={loading}
+    >
+      <LogOut className="size-4" />
 
       {loading ? "Signing out..." : "Logout"}
     </Button>

@@ -5,7 +5,7 @@ import { Footer } from "@/components/sections/landing-page/footer"
 import { Hero } from "@/components/sections/landing-page/hero"
 import { HowItWorks } from "@/components/sections/landing-page/how-it-works"
 import { Logos } from "@/components/sections/landing-page/logos"
-import { Nav } from "@/components/layout/landing-page-nav"
+import { Nav } from "@/components/layout/nav-landing-page"
 import { Problem } from "@/components/sections/landing-page/problem"
 import { ThemeShowcase } from "@/components/sections/landing-page/themes"
 export function Page() {
