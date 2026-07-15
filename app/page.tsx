@@ -8,8 +8,7 @@ import { Logos } from "@/components/sections/landing-page/logos"
 import { Nav } from "@/components/layout/landing-page-nav"
 import { Problem } from "@/components/sections/landing-page/problem"
 import { ThemeShowcase } from "@/components/sections/landing-page/themes"
-
-export function LandingPage() {
+export function Page() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Nav />
@@ -26,4 +25,4 @@ export function LandingPage() {
   )
 }
 
-export default LandingPage
+export default Page
