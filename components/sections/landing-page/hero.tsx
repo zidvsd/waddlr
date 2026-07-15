@@ -8,7 +8,7 @@ export function Hero() {
         <div className="absolute top-[-20%] left-1/2 h-150 w-225 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
         <div className="absolute top-[10%] right-[10%] h-100 w-100 rounded-full bg-violet/10 blur-3xl" />
       </div>
-      <div className="mx-auto max-w-7xl px-6 pt-20 pb-24 md:pt-28 md:pb-32">
+      <div className="mx-auto max-w-7xl px-6 pt-8 pb-24 md:pt-28 md:pb-32">
         <div className="mx-auto max-w-4xl text-center">
           <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/80 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur">
             <Sparkles className="size-3 text-primary" />

@@ -1,15 +1,14 @@
 import Link from "next/link"
 import { ArrowRight, Menu } from "lucide-react"
-import { LogoMark } from "../sections/landing-page/common"
 import { AnimatedThemeToggler } from "../ui/animated-theme-toggler"
 import Logo from "../ui/logo"
+import MobileMenuBtn from "../ui/mobile-menu-btn"
 export function Nav() {
   return (
     <header className="sticky top-0 z-50">
       <div className="surface-glass border-b border-border/60">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-          <Link href="/" className="flex items-center gap-2 ">
-            
+          <Link href="/" className="flex items-center gap-2">
             <Logo />
             <span className="text-[15px] font-semibold tracking-tight text-foreground">
               Waddlr
@@ -44,12 +43,7 @@ export function Nav() {
               <ArrowRight className="size-3.5" />
             </Link>
 
-            <button
-              className="rounded-full p-2 text-foreground md:hidden"
-              aria-label="Menu"
-            >
-              <Menu className="size-5" />
-            </button>
+            <MobileMenuBtn />
           </div>
         </div>
       </div>
