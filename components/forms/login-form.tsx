@@ -37,7 +37,7 @@ export function LoginForm({
                   onClick={() =>
                     authClient.signIn.social({
                       provider: "google",
-                      callbackURL: "/dashboard",
+                      callbackURL: `${window.location.origin}/dashboard`,
                     })
                   }
                   variant="outline"

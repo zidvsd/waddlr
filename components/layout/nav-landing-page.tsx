@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { ArrowRight, Menu } from "lucide-react"
 import { AnimatedThemeToggler } from "../ui/animated-theme-toggler"
 import Logo from "../ui/logo"
 import MobileMenuBtn from "../ui/mobile-menu-btn"
@@ -28,6 +27,7 @@ export function Nav() {
             ))}
           </nav>
           <div className="flex items-center gap-2">
+            <AnimatedThemeToggler />
             <AuthButtons />
             <MobileMenuBtn />
           </div>

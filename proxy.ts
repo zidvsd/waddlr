@@ -1,18 +1,16 @@
-import { type NextRequest } from "next/server"
-import { createClient } from "@/lib/supabase/proxy"
+import { NextRequest, NextResponse } from "next/server"
+import { auth } from "@/lib/auth/auth"
 
 export async function proxy(request: NextRequest) {
-  const { supabase, supabaseResponse } = createClient(request)
+  const session = await auth.api.getSession({
+    headers: request.headers,
+  })
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  if (!user && request.nextUrl.pathname.startsWith("/dashboard")) {
-    return Response.redirect(new URL("/login", request.url))
+  if (!session && request.nextUrl.pathname.startsWith("/dashboard")) {
+    return NextResponse.redirect(new URL("/login", request.url))
   }
 
-  return supabaseResponse
+  return NextResponse.next()
 }
 
 export const config = {

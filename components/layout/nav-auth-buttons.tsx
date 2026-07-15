@@ -1,5 +1,4 @@
 "use client"
-
 import Link from "next/link"
 import { authClient } from "@/lib/auth/auth-client"
 import { LogoutButton } from "../ui/logout-button"

@@ -11,7 +11,7 @@ export default function SignupPage() {
         <div className="flex size-12 items-center justify-center rounded-full bg-foreground/50 text-primary-foreground">
           <Logo size={32} />
         </div>
-        Acme Inc.
+        Waddlr
       </Link>
       <div className="mt-4 w-full max-w-md md:max-w-xl">
         <LoginForm />
