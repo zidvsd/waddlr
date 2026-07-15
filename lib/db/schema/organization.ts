@@ -1,5 +1,5 @@
 import { pgEnum } from "drizzle-orm/pg-core"
-import { pgTable, text, timestamp, index } from "drizzle-orm/pg-core"
+import { pgTable, text, boolean, timestamp, index } from "drizzle-orm/pg-core"
 import { relations } from "drizzle-orm"
 import { user } from "./auth"
 
@@ -7,6 +7,12 @@ export const organizationRoleEnum = pgEnum("organization_role", [
   "organization_admin",
   "officer",
   "member",
+])
+
+export const organizationVisibilityEnum = pgEnum("organization_visibility", [
+  "public",
+  "private",
+  "unlisted",
 ])
 
 export const organization = pgTable(
@@ -19,6 +25,10 @@ export const organization = pgTable(
 
     description: text("description"),
     logoUrl: text("logo_url"),
+
+    visibility: organizationVisibilityEnum("visibility")
+      .default("private")
+      .notNull(),
 
     ownerId: text("owner_id")
       .notNull()
