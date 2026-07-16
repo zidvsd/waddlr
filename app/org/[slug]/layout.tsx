@@ -11,16 +11,18 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb"
-
+import { getServerSession } from "@/lib/auth/get-session"
+import { redirect } from "next/navigation"
 export default async function OrgLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const session = await getServerSession()
+  if (!session) redirect("/login")
   return (
     <SidebarProvider>
       <AppSidebar />
-
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 border-b">
           <div className="flex items-center gap-2 px-4">
