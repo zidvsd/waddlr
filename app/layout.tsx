@@ -3,6 +3,8 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils";
 import { Inter, Fraunces } from "next/font/google"
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "sonner";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -30,7 +32,13 @@ export default function RootLayout({
   )}
 >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+
+        <ThemeProvider>
+        <TooltipProvider>
+        {children}
+        <Toaster/>
+        </TooltipProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
