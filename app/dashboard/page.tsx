@@ -18,9 +18,11 @@ export default async function DashboardPage() {
   //   getUserOrganizations(userId),
   //   getUpcomingEventsForUser(userId, { limit: 4 }),
   // ])
-
+type UpcomingEvent = Awaited<
+  ReturnType<typeof getUpcomingEventsForUser>
+>[number]
   const myOrgs = []
-  const upcomingEvents: any = []
+const upcomingEvents: UpcomingEvent[] = []
 
   const firstName = session!.user.name?.split(" ")[0] ?? "there"
 
