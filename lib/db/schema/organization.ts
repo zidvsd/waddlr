@@ -15,6 +15,12 @@ export const organizationVisibilityEnum = pgEnum("organization_visibility", [
   "unlisted",
 ])
 
+export const organizationJoinPolicyEnum = pgEnum("organization_join_policy", [
+  "open", // joining immediately creates organization_member
+  "approval", // joining creates organization_join_request, admin must approve
+  "invite_only", // no self-serve join; members added directly by an admin/officer
+])
+
 export const organization = pgTable(
   "organization",
   {
@@ -28,6 +34,10 @@ export const organization = pgTable(
 
     visibility: organizationVisibilityEnum("visibility")
       .default("private")
+      .notNull(),
+
+    joinPolicy: organizationJoinPolicyEnum("join_policy")
+      .default("approval")
       .notNull(),
 
     ownerId: text("owner_id")

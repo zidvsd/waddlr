@@ -8,15 +8,15 @@ export const organizationMember = pgTable(
   {
     id: text("id").primaryKey(),
 
-    organizationId: text("organization_id")
-      .notNull()
-      .references(() => organization.id, {
-        onDelete: "cascade",
-      }),
-
     userId: text("user_id")
       .notNull()
       .references(() => user.id, {
+        onDelete: "cascade",
+      }),
+
+    organizationId: text("organization_id")
+      .notNull()
+      .references(() => organization.id, {
         onDelete: "cascade",
       }),
 
@@ -32,25 +32,24 @@ export const organizationMember = pgTable(
       .notNull(),
   },
   (table) => [
-    unique("organization_member_unique").on(table.organizationId, table.userId),
-
-    index("organization_member_organizationId_idx").on(table.organizationId),
-
     index("organization_member_userId_idx").on(table.userId),
+    index("organization_member_organizationId_idx").on(table.organizationId),
+    unique("organization_member_user_org_unique").on(
+      table.userId,
+      table.organizationId
+    ),
   ]
 )
-
 export const organizationMemberRelations = relations(
   organizationMember,
   ({ one }) => ({
-    organization: one(organization, {
-      fields: [organizationMember.organizationId],
-      references: [organization.id],
-    }),
-
     user: one(user, {
       fields: [organizationMember.userId],
       references: [user.id],
+    }),
+    organization: one(organization, {
+      fields: [organizationMember.organizationId],
+      references: [organization.id],
     }),
   })
 )
