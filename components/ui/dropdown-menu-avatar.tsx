@@ -3,6 +3,7 @@
 import { Building2, User, Calendar } from "lucide-react"
 import { LogoutButton } from "./logout-button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -28,17 +29,34 @@ export function DropdownMenuAvatar() {
       />
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <User />
-            Account
+          <DropdownMenuItem className="p-0">
+            <Link
+              href="/profile"
+              className="flex w-full items-center gap-2 px-2 py-1.5"
+            >
+              <User className="size-4" />
+              Account
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Building2 />
-            Organizations
+
+          <DropdownMenuItem className="p-0">
+            <Link
+              href="/organizations"
+              className="flex w-full items-center gap-2 px-2 py-1.5"
+            >
+              <Building2 className="size-4" />
+              Organizations
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Calendar />
-            Events
+
+          <DropdownMenuItem className="p-0">
+            <Link
+              href="/events"
+              className="flex w-full items-center gap-2 px-2 py-1.5"
+            >
+              <Calendar className="size-4" />
+              Events
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
