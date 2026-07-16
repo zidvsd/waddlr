@@ -22,8 +22,8 @@ export function LogoutButton() {
 
   return (
     <Button
-      variant="destructive"
-      className="flex items-center gap-2"
+      variant="ghost"
+      className="flex items-center gap-2 p-0"
       onClick={handleLogout}
       disabled={loading}
     >
