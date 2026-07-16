@@ -1,10 +1,6 @@
 "use client"
 
-import {
-  Building2,
-  User,
-  Calendar,
-} from "lucide-react"
+import { Building2, User, Calendar } from "lucide-react"
 import { LogoutButton } from "./logout-button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"

@@ -41,7 +41,7 @@ export function DashboardNav() {
       </div>
 
       {/* Tab row — desktop nav lives here too, no separate desktop-only nav needed */}
-      <nav className="container flex px-4 md:mx-auto">
+      <nav className="container grid grid-cols-2 px-4 md:mx-auto">
         {TABS.map((tab) => {
           const active =
             pathname === tab.href || pathname.startsWith(`${tab.href}/`)
