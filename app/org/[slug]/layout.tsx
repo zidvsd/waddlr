@@ -1,8 +1,7 @@
 // app/app/layout.tsx
 import { getServerSession } from "@/lib/auth/get-session"
 import { redirect } from "next/navigation"
-import { DashboardNav } from "@/components/layout/nav-dashboard"
-export default async function DashboardLayout({
+export default async function AppLayout({
   children,
 }: {
   children: React.ReactNode
@@ -10,11 +9,6 @@ export default async function DashboardLayout({
   const session = await getServerSession()
 
   if (!session) redirect("/login")
-
-  return (
-    <div className="flex min-h-screen flex-col">
-      <DashboardNav />
-      {children}
-    </div>
-  )
+  
+  return <div className="mx-auto flex min-h-screen flex-col">{children}</div>
 }

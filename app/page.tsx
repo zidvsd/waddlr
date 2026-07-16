@@ -8,7 +8,17 @@ import { Logos } from "@/components/sections/landing-page/logos"
 import { Nav } from "@/components/layout/nav-landing-page"
 import { Problem } from "@/components/sections/landing-page/problem"
 import { ThemeShowcase } from "@/components/sections/landing-page/themes"
-export function Page() {
+
+import { redirect } from "next/navigation"
+import { getServerSession } from "@/lib/auth/get-session"
+
+export default async function Page() {
+  const session = await getServerSession()
+
+  if (session) {
+    redirect("/dashboard")
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Nav />
@@ -24,5 +34,3 @@ export function Page() {
     </div>
   )
 }
-
-export default Page

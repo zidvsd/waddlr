@@ -3,6 +3,8 @@ import { AnimatedThemeToggler } from "../ui/animated-theme-toggler"
 import Logo from "../ui/logo"
 import MobileMenuBtn from "../ui/mobile-menu-btn"
 import { AuthButtons } from "./nav-auth-buttons"
+import { Bell } from "lucide-react"
+import { DropdownMenuAvatar } from "../ui/dropdown-menu-avatar"
 export function Nav() {
   return (
     <header className="sticky top-0 z-50">

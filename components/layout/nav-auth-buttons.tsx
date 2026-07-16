@@ -1,7 +1,6 @@
 "use client"
 import Link from "next/link"
 import { authClient } from "@/lib/auth/auth-client"
-import { LogoutButton } from "../ui/logout-button"
 
 export function AuthButtons() {
   const { data: session, isPending } = authClient.useSession()
@@ -12,9 +11,7 @@ export function AuthButtons() {
 
   return (
     <>
-      {session ? (
-        <LogoutButton />
-      ) : (
+      {!session && (
         <div className="flex items-center gap-2 whitespace-nowrap">
           <Link
             href="/login"

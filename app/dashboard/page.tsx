@@ -12,20 +12,20 @@ import { EmptyOrganization } from "@/components/ui/empty-organization"
 export default async function DashboardPage() {
   const session = await getServerSession()
 
-  const userId = session!.user.id // page should sit behind an auth guard already
+  const userId = session!.user.id
 
   // const [myOrgs, upcomingEvents] = await Promise.all([
   //   getUserOrganizations(userId),
   //   getUpcomingEventsForUser(userId, { limit: 4 }),
   // ])
+
   const myOrgs = []
   const upcomingEvents: any = []
-  // const recommendedOrgs = await getRecommendedOrganizations(userId, { limit: 3 })
 
   const firstName = session!.user.name?.split(" ")[0] ?? "there"
 
   return (
-    <div className="container mx-auto px-6 py-10">
+    <div className="container mx-auto px-4 pt-8">
       <header className="mb-10 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-medium text-foreground">
