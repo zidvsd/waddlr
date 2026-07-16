@@ -1,10 +1,9 @@
 "use client"
 
 import {
-  BadgeCheckIcon,
-  BellIcon,
-  CreditCardIcon,
-  LogOutIcon,
+  Building2,
+  User,
+  Calendar,
 } from "lucide-react"
 import { LogoutButton } from "./logout-button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -31,19 +30,19 @@ export function DropdownMenuAvatar() {
           </Button>
         }
       />
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <BadgeCheckIcon />
+            <User />
             Account
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <CreditCardIcon />
-            Billing
+            <Building2 />
+            Organizations
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <BellIcon />
-            Notifications
+            <Calendar />
+            Events
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

@@ -30,7 +30,7 @@ export function DashboardNav() {
           <Link
             href="/notifications"
             aria-label="Notifications"
-            className="relative flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground"
+            className="relative flex h-9 w-9 items-center justify-center rounded-md transition-colors hover:bg-muted/60 hover:text-foreground"
           >
             <Bell className="size-4.5" />
             {/* unread dot — wire up to real unread count */}
@@ -41,7 +41,7 @@ export function DashboardNav() {
       </div>
 
       {/* Tab row — desktop nav lives here too, no separate desktop-only nav needed */}
-      <nav className="container flex px-4 md:mx-auto md:px-6">
+      <nav className="container flex px-4 md:mx-auto">
         {TABS.map((tab) => {
           const active =
             pathname === tab.href || pathname.startsWith(`${tab.href}/`)

@@ -2,8 +2,8 @@ import Link from "next/link"
 import { format } from "date-fns"
 import { Compass, CalendarDays, Building2 } from "lucide-react"
 
-import { getUserOrganizations } from "../actions/organizations"
-import { getUpcomingEventsForUser } from "../actions/events"
+import { getUserOrganizations } from "../../actions/organizations"
+import { getUpcomingEventsForUser } from "../../actions/events"
 
 import { getServerSession } from "@/lib/auth/get-session"
 import { EmptyEvent } from "@/components/ui/empty-event"
@@ -18,11 +18,11 @@ export default async function DashboardPage() {
   //   getUserOrganizations(userId),
   //   getUpcomingEventsForUser(userId, { limit: 4 }),
   // ])
-type UpcomingEvent = Awaited<
-  ReturnType<typeof getUpcomingEventsForUser>
->[number]
+  type UpcomingEvent = Awaited<
+    ReturnType<typeof getUpcomingEventsForUser>
+  >[number]
   const myOrgs = []
-const upcomingEvents: UpcomingEvent[] = []
+  const upcomingEvents: UpcomingEvent[] = []
 
   const firstName = session!.user.name?.split(" ")[0] ?? "there"
 

@@ -1,7 +1,6 @@
 "use client"
 
 import { LogOut } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { authClient } from "@/lib/auth/auth-client"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -21,8 +20,7 @@ export function LogoutButton() {
   }
 
   return (
-    <Button
-      variant="ghost"
+    <button
       className="flex items-center gap-2 p-0"
       onClick={handleLogout}
       disabled={loading}
@@ -30,6 +28,6 @@ export function LogoutButton() {
       {loading ? <Spinner className="size-4" /> : <LogOut className="size-4" />}
 
       {loading ? "Signing out..." : "Logout"}
-    </Button>
+    </button>
   )
 }
