@@ -18,12 +18,16 @@ import {
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { authClient } from "@/lib/auth/auth-client"
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { Spinner } from "../ui/spinner"
+import { toast } from "sonner"
+import { useRouter } from "next/router"
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter()
+  const formRef = useRef<HTMLFormElement>(null)
   const [loading, setLoading] = useState(false)
   const [googleLoading, setGoogleLoading] = useState(false)
   async function handleGoogleLogin() {
@@ -34,10 +38,15 @@ export function LoginForm({
         provider: "google",
         callbackURL: `${window.location.origin}/dashboard`,
       })
-    } catch (error) {
-      console.error(error)
+    } catch (err: any) {
+      console.error(err)
+      toast.error(`Failed to sign up ${err.message}`)
+
       setGoogleLoading(false)
     }
+    setGoogleLoading(false)
+
+    toast.success("Logged in successfully.")
   }
   async function handleEmailPasswordLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -59,7 +68,9 @@ export function LoginForm({
         console.error(error)
         return
       }
-      window.location.href = "/dashboard"
+      toast.success("Logged in successfully.")
+      formRef.current?.reset()
+      router.push("/dashboard")
     } catch (error) {
       console.error(error)
     } finally {
@@ -75,7 +86,7 @@ export function LoginForm({
           <CardDescription>Login with your Google account</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleEmailPasswordLogin}>
+          <form ref={formRef} onSubmit={handleEmailPasswordLogin}>
             <FieldGroup>
               <Field>
                 <Button

@@ -12,14 +12,19 @@ import {
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { authClient } from "@/lib/auth/auth-client"
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { Spinner } from "../ui/spinner"
+import { toast } from "sonner"
+import { useRouter } from "next/router"
+
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [googleLoading, setGoogleLoading] = useState(false)
+  const formRef = useRef<HTMLFormElement>(null)
   async function handleEmaiilPasswordSignup(
     e: React.FormEvent<HTMLFormElement>
   ) {
@@ -41,12 +46,15 @@ export function SignupForm({
         email,
         password,
       })
-
       if (error) {
         console.error(error)
+        toast.error(`Failed to sign up ${error.message}`)
+
         return
       }
-
+      toast.success("Signed up successfully.")
+      formRef.current?.reset()
+      router.push("/login")
       console.log("Account created", data)
     } catch (error) {
       console.error(error)
@@ -59,7 +67,11 @@ export function SignupForm({
     <div className={cn("flex flex-col gap-6 p-0", className)} {...props}>
       <Card className="overflow-hidden p-0">
         <CardContent className="p-0">
-          <form onSubmit={handleEmaiilPasswordSignup} className="p-4 md:p-8">
+          <form
+            ref={formRef}
+            onSubmit={handleEmaiilPasswordSignup}
+            className="p-4 md:p-8"
+          >
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold">Create your account</h1>
