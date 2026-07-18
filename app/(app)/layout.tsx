@@ -5,6 +5,7 @@ import { DashboardNav } from "@/components/layout/nav-dashboard"
 import { db } from "@/lib/db"
 import { profile } from "@/lib/db/schema"
 import { eq } from "drizzle-orm"
+import { getProfile } from "../actions/profile"
 export default async function DashboardLayout({
   children,
 }: {
@@ -14,9 +15,7 @@ export default async function DashboardLayout({
 
   if (!session) redirect("/login")
 
-  const userProfile = await db.query.profile.findFirst({
-    where: eq(profile.userId, session.user.id),
-  })
+  const userProfile = await getProfile()
 
   if (!userProfile?.onboardingCompleted) {
     redirect("/onboarding")
