@@ -1,16 +1,24 @@
 import { relations } from "drizzle-orm"
-import { index, integer, pgTable, text, timestamp } from "drizzle-orm/pg-core"
+import {
+  index,
+  integer,
+  pgTable,
+  text,
+  timestamp,
+  boolean,
+} from "drizzle-orm/pg-core"
 import { user } from "./auth"
 
 export const profile = pgTable(
   "profile",
   {
-    id: text("id").primaryKey(),
     userId: text("user_id")
-      .notNull()
-      .unique()
-      .references(() => user.id, { onDelete: "cascade" }),
-    displayName: text("display_name"),
+      .primaryKey()
+      .references(() => user.id, {
+        onDelete: "cascade",
+      }),
+    username: text("username").unique(),
+    displayName: text("display_name").notNull(),
     bio: text("bio"),
     pronouns: text("pronouns"),
     school: text("school"),
@@ -20,6 +28,9 @@ export const profile = pgTable(
     updatedAt: timestamp("updated_at")
       .defaultNow()
       .$onUpdate(() => new Date())
+      .notNull(),
+    onboardingCompleted: boolean("onboarding_completed")
+      .default(false)
       .notNull(),
   },
   (table) => [index("profile_userId_idx").on(table.userId)]
