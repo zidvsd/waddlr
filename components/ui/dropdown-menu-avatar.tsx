@@ -60,7 +60,7 @@ export function DropdownMenuAvatar() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem className="">
           <LogoutButton />
         </DropdownMenuItem>
       </DropdownMenuContent>

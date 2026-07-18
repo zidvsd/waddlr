@@ -27,7 +27,7 @@ export function LogoutButton() {
 
   return (
     <button
-      className="flex items-center gap-2 p-0"
+      className="flex w-full cursor-pointer items-center gap-2 p-0"
       onClick={handleLogout}
       disabled={loading}
     >

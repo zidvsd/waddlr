@@ -21,7 +21,8 @@ import { authClient } from "@/lib/auth/auth-client"
 import { useState, useRef } from "react"
 import { Spinner } from "../ui/spinner"
 import { toast } from "sonner"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
+
 export function LoginForm({
   className,
   ...props
