@@ -12,15 +12,52 @@ import {
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { authClient } from "@/lib/auth/auth-client"
+import { useState } from "react"
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [loading, setLoading] = useState(false)
+  async function handleEmaiilPasswordSignup(
+    e: React.FormEvent<HTMLFormElement>
+  ) {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+
+    const firstName = formData.get("firstName") as string
+    const lastName = formData.get("lastName") as string
+    const email = formData.get("email") as string
+    const password = formData.get("password") as string
+
+    const name = `${firstName} ${lastName}`
+
+    try {
+      setLoading(true)
+
+      const { data, error } = await authClient.signUp.email({
+        name,
+        email,
+        password,
+      })
+
+      if (error) {
+        console.error(error)
+        return
+      }
+
+      console.log("Account created", data)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <div className={cn("flex flex-col gap-6 p-0", className)} {...props}>
       <Card className="overflow-hidden p-0">
         <CardContent className="p-0">
-          <form className="p-4 md:p-8">
+          <form onSubmit={handleEmaiilPasswordSignup} className="p-4 md:p-8">
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold">Create your account</h1>
@@ -34,6 +71,7 @@ export function SignupForm({
                   <FieldLabel htmlFor="first-name">First Name</FieldLabel>
                   <Input
                     id="first-name"
+                    name="firstName"
                     type="text"
                     placeholder="John"
                     autoComplete="given-name"
@@ -45,6 +83,7 @@ export function SignupForm({
                   <FieldLabel htmlFor="last-name">Last Name</FieldLabel>
                   <Input
                     id="last-name"
+                    name="lastName"
                     type="text"
                     placeholder="Doe"
                     autoComplete="family-name"
@@ -56,6 +95,7 @@ export function SignupForm({
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
+                  name="email"
                   id="email"
                   type="email"
                   placeholder="m@example.com"
@@ -71,7 +111,12 @@ export function SignupForm({
                 <Field className="grid grid-cols-2 gap-4">
                   <Field>
                     <FieldLabel htmlFor="password">Password</FieldLabel>
-                    <Input id="password" type="password" required />
+                    <Input
+                      id="password"
+                      name="password"
+                      type="password"
+                      required
+                    />
                   </Field>
                   <Field>
                     <FieldLabel htmlFor="confirm-password">
