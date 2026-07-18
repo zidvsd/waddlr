@@ -23,7 +23,7 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex min-h-screen flex-col">
-      <DashboardNav />
+      <DashboardNav profile={userProfile} />
       {children}
     </div>
   )

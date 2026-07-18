@@ -11,7 +11,12 @@ const TABS = [
   { label: "Discover", href: "/discover" },
 ]
 
-export function DashboardNav() {
+type Profile = {
+  avatarUrl: string | null
+  displayName: string | null
+}
+
+export function DashboardNav({ profile }: { profile: Profile | null }) {
   const pathname = usePathname()
 
   return (
@@ -36,7 +41,7 @@ export function DashboardNav() {
             {/* unread dot — wire up to real unread count */}
             {/* <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-red-500" /> */}
           </Link>
-          <DropdownMenuAvatar />
+          <DropdownMenuAvatar profile={profile} />
         </div>
       </div>
 
