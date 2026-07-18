@@ -1,7 +1,7 @@
 // TODO: this file assumes an `event` table that doesn't exist yet in your
 // schema. Wire it up once you build the events module. Shape below matches
 // what /dashboard expects — keep the return type stable when you implement it.
-
+"use-server"
 export type UpcomingEvent = {
   id: string
   title: string
