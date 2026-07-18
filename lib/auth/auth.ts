@@ -13,4 +13,17 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
   },
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user, ctx) => {
+          await db.insert(schema.profile).values({
+            userId: user.id,
+            displayName: user.name ?? "New User",
+            avatarUrl: user.image,
+          })
+        },
+      },
+    },
+  },
 })
