@@ -4,11 +4,11 @@ import { Compass, CalendarDays, Building2 } from "lucide-react"
 
 import { getUserOrganizations } from "../../actions/organizations"
 import { getUpcomingEventsForUser } from "../../actions/events"
-
+import { getRecentAnnouncementsForUser } from "@/app/actions/announcements"
 import { getServerSession } from "@/lib/auth/get-session"
 import { EmptyEvent } from "@/components/ui/empty-event"
 import { EmptyOrganization } from "@/components/ui/empty-organization"
-
+import { EmptyAnnouncement } from "@/components/ui/empty-announcement"
 export default async function DashboardPage() {
   const session = await getServerSession()
 
@@ -21,8 +21,12 @@ export default async function DashboardPage() {
   type UpcomingEvent = Awaited<
     ReturnType<typeof getUpcomingEventsForUser>
   >[number]
+  type Announcement = Awaited<
+    ReturnType<typeof getRecentAnnouncementsForUser>
+  >[number]
   const myOrgs = []
   const upcomingEvents: UpcomingEvent[] = []
+  const announcements: Announcement[] = []
 
   const firstName = session!.user.name?.split(" ")[0] ?? "there"
 
@@ -104,6 +108,37 @@ export default async function DashboardPage() {
         </section>
       )}
       */}
+
+      <section className="mb-12">
+        <h2 className="mb-3 text-sm font-medium text-muted-foreground">
+          Receng Announcements
+        </h2>
+
+        {announcements.length === 0 ? (
+          <EmptyAnnouncement />
+        ) : (
+          <div className="divide-y divide-border rounded-xl border border-border">
+            {upcomingEvents.map((event) => (
+              <Link
+                key={event.id}
+                href={`/org/${event.organizationSlug}/events/${event.id}`}
+                className="flex items-center gap-3 px-4 py-3 transition-colors hover:bg-muted/50"
+              >
+                <CalendarDays className="size-4.5 shrink-0 text-muted-foreground" />
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm">{event.title}</p>
+                  <p className="truncate text-xs text-muted-foreground">
+                    {event.organizationName}
+                  </p>
+                </div>
+                <span className="shrink-0 text-sm text-muted-foreground">
+                  {format(event.startsAt, "MMM d")}
+                </span>
+              </Link>
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   )
 }

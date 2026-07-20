@@ -14,15 +14,25 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-export function DropdownMenuAvatar() {
+type Profile = {
+  displayName: string | null
+  avatarUrl: string | null
+}
+
+export function DropdownMenuAvatar({ profile }: { profile: Profile | null }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
         render={
           <Button variant="ghost" size="icon" className="rounded-full">
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="shadcn" />
-              <AvatarFallback>LR</AvatarFallback>
+              <AvatarImage
+                src={profile?.avatarUrl ?? undefined}
+                alt={profile?.displayName ?? "User"}
+              />
+              <AvatarFallback>
+                {profile?.displayName?.slice(0, 2).toUpperCase() ?? "?"}
+              </AvatarFallback>
             </Avatar>
           </Button>
         }
@@ -60,7 +70,7 @@ export function DropdownMenuAvatar() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem className="">
           <LogoutButton />
         </DropdownMenuItem>
       </DropdownMenuContent>

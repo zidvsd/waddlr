@@ -1,3 +1,4 @@
+"use-server"
 import { db } from "@/lib/db"
 import { organizationMember } from "@/lib/db/schema"
 import { organization } from "@/lib/db/schema/organization"

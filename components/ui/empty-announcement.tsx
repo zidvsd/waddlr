@@ -1,4 +1,4 @@
-import { ArrowUpRightIcon, Building2 } from "lucide-react"
+import { ArrowUpRightIcon, Megaphone } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -10,25 +10,23 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty"
 import Link from "next/link"
-export function EmptyOrganization() {
+export function EmptyAnnouncement() {
   return (
     <Empty>
       <EmptyHeader>
         <EmptyMedia variant="icon">
-          <Building2 />
+          <Megaphone />
         </EmptyMedia>
-        <EmptyTitle>No Organization Yet</EmptyTitle>
+        <EmptyTitle>No Announcements Yet</EmptyTitle>
         <EmptyDescription>
-          You haven&apos;t created any projects yet. Get started by join your
-          first org.
+          No announcements to keep track of yet. Get started by joining your
+          first organization.
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent className="flex-row justify-center gap-2">
-        <Link href={"/discover?tab=orgs"}>
-          <Button>Find Orgs</Button>
+        <Link href={"/discover?tab=announcements"}>
+          <Button>Find Announcements</Button>
         </Link>
-
-        <Button variant="outline">Create Org</Button>
       </EmptyContent>
       <Button
         variant="link"
