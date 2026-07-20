@@ -9,7 +9,7 @@ export async function proxy(request: NextRequest) {
   if (!session && request.nextUrl.pathname.startsWith("/dashboard")) {
     return NextResponse.redirect(new URL("/login", request.url))
   }
-
+    
   return NextResponse.next()
 }
 
