@@ -9,7 +9,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty"
-
+import Link from "next/link"
 export function EmptyEvent() {
   return (
     <Empty>
@@ -24,7 +24,10 @@ export function EmptyEvent() {
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent className="flex-row justify-center gap-2">
-        <Button>Join Org</Button>
+        <Link href={"/discover?tab=events"}>
+          <Button>Join Org</Button>
+        </Link>
+
         <Button variant="outline">Suggest Events</Button>
       </EmptyContent>
       <Button
