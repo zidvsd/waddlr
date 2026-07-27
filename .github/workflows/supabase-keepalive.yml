@@ -2,15 +2,14 @@ name: Supabase Keep Alive
 
 on:
   schedule:
-    - cron: "0 0 */5 * *"
+    - cron: "0 0 * * *" # once per day
   workflow_dispatch:
 
 jobs:
-  keepalive:
+  ping:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Ping Supabase
+      - name: Ping Health Endpoint
         run: |
-          curl "${{ secrets.SUPABASE_URL }}/rest/v1/" \
-          -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}"
+          curl -L https://clubly-jet.vercel.app/api/health
