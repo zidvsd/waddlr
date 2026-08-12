@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { format } from "date-fns"
 import { Compass, CalendarDays, Building2 } from "lucide-react"
-
+import { getAllOrganizations } from "../../actions/organizations"
 import { getUserOrganizations } from "../../actions/organizations"
 import { getUpcomingEventsForUser } from "../../actions/events"
 import { getRecentAnnouncementsForUser } from "@/app/actions/announcements"
@@ -9,6 +9,7 @@ import { getServerSession } from "@/lib/auth/get-session"
 import { EmptyEvent } from "@/components/ui/empty-event"
 import { EmptyOrganization } from "@/components/ui/empty-organization"
 import { EmptyAnnouncement } from "@/components/ui/empty-announcement"
+import { OrganizationCards } from "@/components/cards/orgCards"
 export default async function DashboardPage() {
   const session = await getServerSession()
 
@@ -27,9 +28,8 @@ export default async function DashboardPage() {
   const myOrgs = []
   const upcomingEvents: UpcomingEvent[] = []
   const announcements: Announcement[] = []
-
+  let orgs = await getAllOrganizations()
   const firstName = session!.user.name?.split(" ")[0] ?? "there"
-
   return (
     <div className="container mx-auto px-4 pt-8">
       <header className="mb-10 flex items-center justify-between">
@@ -48,7 +48,11 @@ export default async function DashboardPage() {
           Your organizations
         </h2>
 
-        {myOrgs.length === 0 ? <EmptyOrganization /> : null}
+        {orgs.length === 0 ? (
+          <EmptyOrganization />
+        ) : (
+          <OrganizationCards organizations={orgs} />
+        )}
       </section>
 
       <section className="mb-12">

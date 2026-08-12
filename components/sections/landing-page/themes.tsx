@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react"
 
-const THEMES = [
+export const THEMES = [
   {
     name: "Apple Minimal",
     org: "Student Council",
