@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { format } from "date-fns"
-import { Compass, CalendarDays, Building2 } from "lucide-react"
+import { Compass, CalendarDays, Building2, ArrowRight } from "lucide-react"
 import { getAllOrganizations } from "../../actions/organizations"
 import { getUserOrganizations } from "../../actions/organizations"
 import { getUpcomingEventsForUser } from "../../actions/events"
@@ -44,9 +44,18 @@ export default async function DashboardPage() {
       </header>
 
       <section className="mb-12">
-        <h2 className="mb-3 text-sm font-medium text-muted-foreground">
-          Your organizations
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="mb-3 text-sm font-medium text-muted-foreground">
+            Your organizations
+          </h2>
+          <Link
+            href="/discover"
+            className="flex items-center gap-1 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            See all
+            <ArrowRight className="size-3.5" />
+          </Link>
+        </div>
 
         {orgs.length === 0 ? (
           <EmptyOrganization />

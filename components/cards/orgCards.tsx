@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { ArrowRight, Users, UserPlus } from "lucide-react"
 import type { Organization } from "@/app/actions/organizations"
+import { Button } from "../ui/button"
 type OrganizationCardsProps = {
   organizations: Organization[]
 }
@@ -12,30 +13,6 @@ export function OrganizationCards({ organizations }: OrganizationCardsProps) {
 
   return (
     <section className="mb-12">
-      <div className="mb-4 flex items-end justify-between">
-        <div>
-          <p className="text-xs font-medium tracking-widest text-primary uppercase">
-            Discover
-          </p>
-
-          <h2 className="mt-1 text-xl font-semibold tracking-tight text-foreground">
-            Organizations
-          </h2>
-
-          <p className="mt-1 text-sm text-muted-foreground">
-            Find communities you might be interested in.
-          </p>
-        </div>
-
-        <Link
-          href="/discover"
-          className="flex items-center gap-1 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
-        >
-          See all
-          <ArrowRight className="size-3.5" />
-        </Link>
-      </div>
-
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {organizations.map((organization) => (
           <OrganizationCard key={organization.id} organization={organization} />
@@ -45,11 +22,7 @@ export function OrganizationCards({ organizations }: OrganizationCardsProps) {
   )
 }
 
-function OrganizationCard({
-  organization,
-}: {
-  organization: Organization
-}) {
+function OrganizationCard({ organization }: { organization: Organization }) {
   const initials = organization.name
     .split(" ")
     .filter(Boolean)
@@ -117,13 +90,13 @@ function OrganizationCard({
         </div>
 
         {/* Follow */}
-        <button
+        <Button
           type="button"
           className="mt-4 flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-primary text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90"
         >
           <UserPlus className="size-3.5" />
-          Follow
-        </button>
+          Join
+        </Button>
       </div>
     </article>
   )
