@@ -1,5 +1,6 @@
 import { ArrowRight, QrCode, Sparkles, Users } from "lucide-react"
 import { FloatingCard, LogoMark } from "./common"
+import Image from "next/image"
 
 export function Hero() {
   return (
@@ -45,7 +46,7 @@ export function Hero() {
         <div className="relative mx-auto mt-20 max-w-6xl">
           <div className="bg-gradient-brand absolute inset-x-8 top-8 -z-10 h-full rounded-4xl opacity-30 blur-3xl" />
           <div className="surface-card overflow-hidden rounded-3xl">
-            <img
+            <Image
               src="https://placehold.co/600x400"
               alt="Waddlr organization portal for Computer Society"
               width={1600}

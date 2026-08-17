@@ -55,7 +55,6 @@ export function SignupForm({
       toast.success("Signed up successfully.")
       formRef.current?.reset()
       router.push("/login")
-      console.log("Account created", data)
     } catch (error) {
       console.error(error)
     } finally {

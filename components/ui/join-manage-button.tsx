@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-
+import { Button } from "./button"
 type Props = {
   slug: string
   canManage: boolean
@@ -24,23 +24,26 @@ export function JoinOrManageButton({
 
   return (
     <div className="flex gap-2">
+      {/* Admin / Officer / Superadmin */}
       {canManage && (
-        <Link
-          href={`/org/${slug}/manage`}
-          className="rounded-[var(--radius)] border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted/60"
+        <Button
+          variant={"default"}
+          className="rounded-md border border-border text-sm transition-colors hover:bg-muted/60"
         >
-          Manage
-        </Link>
+          <Link href={`/org/${slug}/manage`} className="">
+            Manage
+          </Link>
+        </Button>
       )}
+
+      {/* Non-member */}
       {!isMember && joinPolicy !== "invite_only" && (
-        <button className="rounded-[var(--radius)] bg-foreground px-3.5 py-1.5 text-sm font-medium text-background">
+        <Button
+          variant={"default"}
+          className="rounded-md bg-foreground text-sm font-medium text-background"
+        >
           {joinLabel}
-        </button>
-      )}
-      {isMember && !canManage && (
-        <button className="rounded-[var(--radius)] border border-border px-3.5 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-muted/60">
-          Leave
-        </button>
+        </Button>
       )}
     </div>
   )

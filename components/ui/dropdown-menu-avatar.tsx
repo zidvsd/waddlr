@@ -1,6 +1,12 @@
 "use client"
 
-import { Building2, User, Calendar } from "lucide-react"
+import {
+  Building2,
+  User,
+  Calendar,
+  Megaphone,
+  type LucideIcon,
+} from "lucide-react"
 import { LogoutButton } from "./logout-button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link"
@@ -18,6 +24,33 @@ type Profile = {
   displayName: string | null
   avatarUrl: string | null
 }
+
+const navItems: {
+  label: string
+  href: string
+  icon: LucideIcon
+}[] = [
+  {
+    label: "Account",
+    href: "/profile",
+    icon: User,
+  },
+  {
+    label: "Organizations",
+    href: "/organizations",
+    icon: Building2,
+  },
+  {
+    label: "Events",
+    href: "/events",
+    icon: Calendar,
+  },
+  {
+    label: "Announcements",
+    href: "/announcements",
+    icon: Megaphone,
+  },
+]
 
 export function DropdownMenuAvatar({ profile }: { profile: Profile | null }) {
   return (
@@ -37,40 +70,29 @@ export function DropdownMenuAvatar({ profile }: { profile: Profile | null }) {
           </Button>
         }
       />
+
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuGroup>
-          <DropdownMenuItem className="p-0">
-            <Link
-              href="/profile"
-              className="flex w-full items-center gap-2 px-2 py-1.5"
-            >
-              <User className="size-4" />
-              Account
-            </Link>
-          </DropdownMenuItem>
+          {navItems.map((item) => {
+            const Icon = item.icon
 
-          <DropdownMenuItem className="p-0">
-            <Link
-              href="/organizations"
-              className="flex w-full items-center gap-2 px-2 py-1.5"
-            >
-              <Building2 className="size-4" />
-              Organizations
-            </Link>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem className="p-0">
-            <Link
-              href="/events"
-              className="flex w-full items-center gap-2 px-2 py-1.5"
-            >
-              <Calendar className="size-4" />
-              Events
-            </Link>
-          </DropdownMenuItem>
+            return (
+              <DropdownMenuItem key={item.href} className="p-0">
+                <Link
+                  href={item.href}
+                  className="flex w-full items-center gap-2 px-2 py-1.5"
+                >
+                  <Icon className="size-4" />
+                  {item.label}
+                </Link>
+              </DropdownMenuItem>
+            )
+          })}
         </DropdownMenuGroup>
+
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="">
+
+        <DropdownMenuItem>
           <LogoutButton />
         </DropdownMenuItem>
       </DropdownMenuContent>

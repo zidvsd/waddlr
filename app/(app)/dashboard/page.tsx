@@ -1,7 +1,6 @@
 import Link from "next/link"
-import { format } from "date-fns"
-import { Compass, CalendarDays, Building2, ArrowRight } from "lucide-react"
-import { getAllOrganizations } from "../../actions/organizations"
+import { AnnouncementCard } from "@/components/cards/AnnouncementCard"
+import { ArrowRight } from "lucide-react"
 import { getUserOrganizations } from "../../actions/organizations"
 import { getUpcomingEventsForUser } from "../../actions/events"
 import { getRecentAnnouncementsForUser } from "@/app/actions/announcements"
@@ -9,27 +8,24 @@ import { getServerSession } from "@/lib/auth/get-session"
 import { EmptyEvent } from "@/components/ui/empty-event"
 import { EmptyOrganization } from "@/components/ui/empty-organization"
 import { EmptyAnnouncement } from "@/components/ui/empty-announcement"
-import { OrganizationCards } from "@/components/cards/orgCards"
+import { OrganizationCard } from "@/components/cards/OrganizationCard"
+import { EventCard } from "@/components/cards/EventCard"
 export default async function DashboardPage() {
   const session = await getServerSession()
+  if (!session) {
+    return null
+  }
 
-  const userId = session!.user.id
+  const userId = session.user.id
 
-  // const [myOrgs, upcomingEvents] = await Promise.all([
-  //   getUserOrganizations(userId),
-  //   getUpcomingEventsForUser(userId, { limit: 4 }),
-  // ])
-  type UpcomingEvent = Awaited<
-    ReturnType<typeof getUpcomingEventsForUser>
-  >[number]
-  type Announcement = Awaited<
-    ReturnType<typeof getRecentAnnouncementsForUser>
-  >[number]
-  const myOrgs = []
-  const upcomingEvents: UpcomingEvent[] = []
-  const announcements: Announcement[] = []
-  let orgs = await getAllOrganizations()
-  const firstName = session!.user.name?.split(" ")[0] ?? "there"
+  const [myOrgs, upcomingEvents, announcements] = await Promise.all([
+    getUserOrganizations(userId),
+    getUpcomingEventsForUser(userId, { limit: 4 }),
+    getRecentAnnouncementsForUser(userId, { limit: 4 }),
+  ])
+
+  const firstName = session.user.name?.split(" ")[0] ?? "there"
+
   return (
     <div className="container mx-auto px-4 pt-8">
       <header className="mb-10 flex items-center justify-between">
@@ -57,44 +53,42 @@ export default async function DashboardPage() {
           </Link>
         </div>
 
-        {orgs.length === 0 ? (
+        {myOrgs.length === 0 ? (
           <EmptyOrganization />
         ) : (
-          <OrganizationCards organizations={orgs} />
-        )}
-      </section>
-
-      <section className="mb-12">
-        <h2 className="mb-3 text-sm font-medium text-muted-foreground">
-          Upcoming events
-        </h2>
-
-        {myOrgs.length === 0 ? (
-          <EmptyEvent />
-        ) : (
-          <div className="divide-y divide-border rounded-xl border border-border">
-            {upcomingEvents.map((event) => (
-              <Link
-                key={event.id}
-                href={`/org/${event.organizationSlug}/events/${event.id}`}
-                className="flex items-center gap-3 px-4 py-3 transition-colors hover:bg-muted/50"
-              >
-                <CalendarDays className="size-4.5 shrink-0 text-muted-foreground" />
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm">{event.title}</p>
-                  <p className="truncate text-xs text-muted-foreground">
-                    {event.organizationName}
-                  </p>
-                </div>
-                <span className="shrink-0 text-sm text-muted-foreground">
-                  {format(event.startsAt, "MMM d")}
-                </span>
-              </Link>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {myOrgs.map((item) => (
+              <OrganizationCard key={item.organization.id} item={item} />
             ))}
           </div>
         )}
       </section>
 
+      <section className="mb-12">
+        <div className="flex items-center justify-between">
+          <h2 className="mb-3 text-sm font-medium text-muted-foreground">
+            Upcoming Events
+          </h2>
+
+          <Link
+            href="/discover"
+            className="flex items-center gap-1 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            See all
+            <ArrowRight className="size-3.5" />
+          </Link>
+        </div>
+
+        {upcomingEvents.length === 0 ? (
+          <EmptyEvent />
+        ) : (
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {upcomingEvents.map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
+          </div>
+        )}
+      </section>
       {/*
       {recommendedOrgs.length > 0 && (
         <section>
@@ -123,31 +117,29 @@ export default async function DashboardPage() {
       */}
 
       <section className="mb-12">
-        <h2 className="mb-3 text-sm font-medium text-muted-foreground">
-          Receng Announcements
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="mb-3 text-sm font-medium text-muted-foreground">
+            Recent announcements
+          </h2>
+
+          <Link
+            href="/discover"
+            className="flex items-center gap-1 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            See all
+            <ArrowRight className="size-3.5" />
+          </Link>
+        </div>
 
         {announcements.length === 0 ? (
           <EmptyAnnouncement />
         ) : (
-          <div className="divide-y divide-border rounded-xl border border-border">
-            {upcomingEvents.map((event) => (
-              <Link
-                key={event.id}
-                href={`/org/${event.organizationSlug}/events/${event.id}`}
-                className="flex items-center gap-3 px-4 py-3 transition-colors hover:bg-muted/50"
-              >
-                <CalendarDays className="size-4.5 shrink-0 text-muted-foreground" />
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm">{event.title}</p>
-                  <p className="truncate text-xs text-muted-foreground">
-                    {event.organizationName}
-                  </p>
-                </div>
-                <span className="shrink-0 text-sm text-muted-foreground">
-                  {format(event.startsAt, "MMM d")}
-                </span>
-              </Link>
+          <div>
+            {announcements.map((announcement) => (
+              <AnnouncementCard
+                key={announcement.id}
+                announcements={announcements}
+              />
             ))}
           </div>
         )}

@@ -2,6 +2,7 @@
 
 import type { FormState } from "@/hooks/use-onboarding-form"
 import { initials } from "@/lib/utils"
+import Image from "next/image"
 export function ProfilePreviewCard({ form }: { form: FormState }) {
   const hasName = form.displayName.trim().length > 0
 
@@ -10,7 +11,7 @@ export function ProfilePreviewCard({ form }: { form: FormState }) {
       <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-secondary text-base font-semibold text-secondary-foreground">
         {form.avatarUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={form.avatarUrl}
             alt=""
             className="h-full w-full object-cover"

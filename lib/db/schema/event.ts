@@ -25,6 +25,8 @@ export const event = pgTable("event", {
   description: text("description"),
   location: text("location"),
 
+  thumbnailUrl: text("thumbnail_url"),
+
   // Storing start/end separately (rather than a single timestamp) since
   // events likely need duration for calendar/attendance display.
   startsAt: timestamp("starts_at", { mode: "date" }).notNull(),
