@@ -59,7 +59,7 @@ export function OrganizationCard({ item }: { item: UserOrganization }) {
 
       {/* Organization info */}
       <div className="mb-6">
-        <h3 className="truncate text-lg font-semibold tracking-tight text-wrap text-foreground">
+        <h3 className="text-lg font-semibold tracking-tight text-wrap text-foreground">
           {organization.name}
         </h3>
 

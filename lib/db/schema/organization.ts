@@ -31,6 +31,7 @@ export const organization = pgTable(
 
     description: text("description"),
     logoUrl: text("logo_url"),
+    headerUrl: text("header_url"),
 
     visibility: organizationVisibilityEnum("visibility")
       .default("private")

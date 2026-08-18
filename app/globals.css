@@ -224,6 +224,21 @@
   reinventing them per component.
 */
 @layer utilities {
+  .container {
+    margin-inline: auto;
+    max-width: 1280px;
+    padding-inline: 1.25rem;
+
+    @media (min-width: 640px) {
+      padding-inline: 1.5rem;
+    }
+    @media (min-width:  768px) {
+          padding-inline: 1.75rem;
+    }
+    @media (min-width: 1024px) {
+      padding-inline: 2rem;
+    }
+  }
 
   /* Generous, responsive vertical rhythm for landing/marketing sections */
   .section-padding {
@@ -279,6 +294,8 @@
     @apply font-mono tabular-nums;
   }
 }
+
+
 
 ::view-transition-old(root),
 ::view-transition-new(root) {

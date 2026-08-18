@@ -17,6 +17,7 @@ export type UserOrganization = {
     slug: string
     description: string | null
     logoUrl: string | null
+    headerUrl: string | null
     memberCount: number
   }
 }
@@ -36,6 +37,7 @@ export async function getUserOrganizations(
       orgName: organization.name,
       orgSlug: organization.slug,
       orgLogoUrl: organization.logoUrl,
+      orgHeaderUrl: organization.headerUrl,
       orgDescription: organization.description,
     })
     .from(organizationMember)
@@ -68,6 +70,7 @@ export async function getUserOrganizations(
       name: m.orgName,
       slug: m.orgSlug,
       logoUrl: m.orgLogoUrl,
+      headerUrl: m.orgHeaderUrl,
       description: m.orgDescription,
       memberCount: countMap.get(m.orgId) ?? 0,
     },
@@ -106,6 +109,7 @@ export async function getOrganizationBySlug(slug: string) {
       slug: organization.slug,
       description: organization.description,
       logoUrl: organization.logoUrl,
+      headerUrl: organization.headerUrl,
       visibility: organization.visibility,
       joinPolicy: organization.joinPolicy,
       ownerId: organization.ownerId,

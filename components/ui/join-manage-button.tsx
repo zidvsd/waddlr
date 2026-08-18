@@ -23,13 +23,10 @@ export function JoinOrManageButton({
         : "Invite only"
 
   return (
-    <div className="flex gap-2">
+    <div className="flex">
       {/* Admin / Officer / Superadmin */}
       {canManage && (
-        <Button
-          variant={"default"}
-          className="rounded-md border border-border text-sm transition-colors hover:bg-muted/60"
-        >
+        <Button variant={"default"}>
           <Link href={`/org/${slug}/manage`} className="">
             Manage
           </Link>

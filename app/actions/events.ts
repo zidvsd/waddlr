@@ -4,6 +4,22 @@ import { db } from "@/lib/db"
 import { event, organization, organizationMember } from "@/lib/db/schema"
 import { and, asc, eq, gte } from "drizzle-orm"
 
+export type UserEvent = {
+  status: "going" | "interested" | "not_going" | null
+  event: {
+    id: string
+    title: string
+    description: string | null
+    location: string | null
+    thumbnailUrl: string | null
+    startsAt: Date
+    endsAt: Date | null
+    organizationId: string
+    organizationName: string
+    organizationSlug: string
+    attendeeCount: number
+  }
+}
 export async function getUpcomingEventsForUser(
   userId: string,
   opts: { limit?: number } = {}

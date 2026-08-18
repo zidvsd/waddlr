@@ -3,19 +3,25 @@ import type { UserAnnouncement } from "@/app/actions/announcements"
 import Link from "next/link"
 export function AnnouncementCard({
   announcement,
+  isSameDate,
 }: {
   announcement: UserAnnouncement
+  isSameDate: boolean
 }) {
   return (
     <div className="group flex items-start gap-5">
       <div className="w-16 shrink-0 pt-0.5 text-right">
-        <span className="block text-xs font-semibold text-muted-foreground">
-          {format(announcement.createdAt, "MMM dd")}
-        </span>
+        {!isSameDate && (
+          <>
+            <span className="block text-xs font-semibold text-muted-foreground">
+              {format(announcement.createdAt, "MMM dd")}
+            </span>
 
-        <span className="mt-0.5 block text-xs text-muted-foreground">
-          {format(announcement.createdAt, "yyyy")}
-        </span>
+            <span className="mt-0.5 block text-xs text-muted-foreground">
+              {format(announcement.createdAt, "yyyy")}
+            </span>
+          </>
+        )}
       </div>
 
       <div className="self-stretch">

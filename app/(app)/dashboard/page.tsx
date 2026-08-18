@@ -10,6 +10,7 @@ import { EmptyOrganization } from "@/components/ui/empty-organization"
 import { EmptyAnnouncement } from "@/components/ui/empty-announcement"
 import { OrganizationCard } from "@/components/cards/OrganizationCard"
 import { EventCard } from "@/components/cards/EventCard"
+import { format } from "date-fns"
 export default async function DashboardPage() {
   const session = await getServerSession()
   if (!session) {
@@ -109,12 +110,22 @@ export default async function DashboardPage() {
           <EmptyAnnouncement />
         ) : (
           <div className="flex flex-col gap-8">
-            {announcements.map((announcement) => (
-              <AnnouncementCard
-                key={announcement.id}
-                announcement={announcement}
-              />
-            ))}
+            {announcements.map((announcement, index) => {
+              const previous = announcements[index - 1]
+
+              const isSameDate =
+                previous &&
+                format(previous.createdAt, "yyyy-MM-dd") ===
+                  format(announcement.createdAt, "yyyy-MM-dd")
+
+              return (
+                <AnnouncementCard
+                  key={announcement.id}
+                  announcement={announcement}
+                  isSameDate={isSameDate}
+                />
+              )
+            })}
           </div>
         )}
       </section>

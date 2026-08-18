@@ -33,20 +33,31 @@ export default async function OrgLayout({
   return (
     <div className="flex w-full flex-col">
       {/* Banner */}
-      <div className="h-28 w-full bg-accent" />
 
       {/* Organization header */}
+      {org.headerUrl ? (
+        <div className="relative h-28 w-full">
+          <Image
+            src={org.headerUrl}
+            alt={org.name}
+            fill
+            className="object-cover"
+          />
+        </div>
+      ) : (
+        <div className="h-28 w-full bg-accent" />
+      )}
       <div className="container mx-auto px-4 pb-4 md:px-6">
         <div className="-mt-6 flex items-end justify-between">
           {/* Organization logo */}
-          <div className="relative size-12 overflow-hidden rounded-full bg-muted">
+          <div className="relative size-18 overflow-hidden rounded-full bg-muted">
             {org.logoUrl ? (
               <Image
                 src={org.logoUrl}
                 alt={org.name}
                 width={48}
                 height={48}
-                className="size-12 object-cover"
+                className="size-18 object-cover"
               />
             ) : (
               <span className="text-sm font-semibold text-primary">N/A</span>
@@ -54,12 +65,14 @@ export default async function OrgLayout({
           </div>
 
           {/* Join / Manage / Leave */}
-          <JoinOrManageButton
-            slug={org.slug}
-            canManage={canManage}
-            isMember={isMember}
-            joinPolicy={org.joinPolicy}
-          />
+          <div className="z-10 mt-4">
+            <JoinOrManageButton
+              slug={org.slug}
+              canManage={canManage}
+              isMember={isMember}
+              joinPolicy={org.joinPolicy}
+            />
+          </div>
         </div>
 
         {/* Organization name */}
