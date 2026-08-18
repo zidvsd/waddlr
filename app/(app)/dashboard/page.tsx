@@ -23,7 +23,7 @@ export default async function DashboardPage() {
     getUpcomingEventsForUser(userId, { limit: 4 }),
     getRecentAnnouncementsForUser(userId, { limit: 4 }),
   ])
-
+  console.log(announcements)
   const firstName = session.user.name?.split(" ")[0] ?? "there"
 
   return (
@@ -89,32 +89,6 @@ export default async function DashboardPage() {
           </div>
         )}
       </section>
-      {/*
-      {recommendedOrgs.length > 0 && (
-        <section>
-          <h2 className="mb-3 text-sm font-medium text-muted-foreground">
-            For you
-          </h2>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {recommendedOrgs.map((org) => (
-              <Link
-                key={org.id}
-                href={`/discover/${org.slug}`}
-                className="rounded-xl border border-border p-4 transition-colors hover:bg-muted/50"
-              >
-                <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-lg bg-muted">
-                  <Users className="h-[18px] w-[18px] text-muted-foreground" />
-                </div>
-                <p className="mb-1 text-sm font-medium">{org.name}</p>
-                <p className="text-xs text-muted-foreground">
-                  {org.memberCount} members
-                </p>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-      */}
 
       <section className="mb-12">
         <div className="flex items-center justify-between">
@@ -134,11 +108,11 @@ export default async function DashboardPage() {
         {announcements.length === 0 ? (
           <EmptyAnnouncement />
         ) : (
-          <div>
+          <div className="flex flex-col gap-8">
             {announcements.map((announcement) => (
               <AnnouncementCard
                 key={announcement.id}
-                announcements={announcements}
+                announcement={announcement}
               />
             ))}
           </div>

@@ -47,22 +47,21 @@ export function OrganizationCard({ item }: { item: UserOrganization }) {
         </div>
 
         {/* Member count */}
-        <span className="text-xs font-medium text-muted-foreground">
-          {organization.memberCount} members
-        </span>
+        <div className="flex flex-col items-end justify-end">
+          <span className="text-xs font-medium text-muted-foreground">
+            {organization.memberCount} members
+          </span>
+          <span className="shrink-0 rounded-full bg-muted text-[10px] font-medium text-muted-foreground">
+            {roleLabel}
+          </span>
+        </div>
       </div>
 
       {/* Organization info */}
       <div className="mb-6">
-        <div className="flex items-center gap-2">
-          <h3 className="truncate text-lg font-semibold tracking-tight text-wrap text-foreground">
-            {organization.name}
-          </h3>
-
-          <span className="shrink-0 rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground">
-            {roleLabel}
-          </span>
-        </div>
+        <h3 className="truncate text-lg font-semibold tracking-tight text-wrap text-foreground">
+          {organization.name}
+        </h3>
 
         <p className="mt-2 line-clamp-2 text-sm leading-snug text-muted-foreground">
           {organization.description || "A student organization on Waddlr."}

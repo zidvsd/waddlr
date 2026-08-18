@@ -1,7 +1,7 @@
 "use server"
 import { db } from "@/lib/db"
 import { organizationMember } from "@/lib/db/schema"
-import { eq, count, and } from "drizzle-orm"
+import { eq, count, and, inArray } from "drizzle-orm"
 import { OrganizationCard } from "@/lib/types/organization"
 import { profile } from "@/lib/db/schema/profile"
 import {
@@ -28,7 +28,8 @@ export type UserOrganization = {
 export async function getUserOrganizations(
   userId: string
 ): Promise<UserOrganization[]> {
-  const rows = await db
+  // 1. Get the user's memberships + org info (no aggregation here)
+  const memberships = await db
     .select({
       role: organizationMember.role,
       orgId: organization.id,
@@ -36,7 +37,6 @@ export async function getUserOrganizations(
       orgSlug: organization.slug,
       orgLogoUrl: organization.logoUrl,
       orgDescription: organization.description,
-      memberCount: count(organizationMember.id),
     })
     .from(organizationMember)
     .innerJoin(
@@ -44,24 +44,32 @@ export async function getUserOrganizations(
       eq(organizationMember.organizationId, organization.id)
     )
     .where(eq(organizationMember.userId, userId))
-    .groupBy(
-      organizationMember.role,
-      organization.id,
-      organization.name,
-      organization.slug,
-      organization.logoUrl,
-      organization.description
-    )
 
-  return rows.map((row) => ({
-    role: row.role,
+  if (memberships.length === 0) return []
+
+  const orgIds = memberships.map((m) => m.orgId)
+
+  // 2. Get member counts for exactly those orgs, unfiltered by user
+  const counts = await db
+    .select({
+      orgId: organizationMember.organizationId,
+      memberCount: count(organizationMember.id),
+    })
+    .from(organizationMember)
+    .where(inArray(organizationMember.organizationId, orgIds))
+    .groupBy(organizationMember.organizationId)
+
+  const countMap = new Map(counts.map((c) => [c.orgId, Number(c.memberCount)]))
+
+  return memberships.map((m) => ({
+    role: m.role,
     organization: {
-      id: row.orgId,
-      name: row.orgName,
-      slug: row.orgSlug,
-      logoUrl: row.orgLogoUrl,
-      description: row.orgDescription,
-      memberCount: Number(row.memberCount),
+      id: m.orgId,
+      name: m.orgName,
+      slug: m.orgSlug,
+      logoUrl: m.orgLogoUrl,
+      description: m.orgDescription,
+      memberCount: countMap.get(m.orgId) ?? 0,
     },
   }))
 }
