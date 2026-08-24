@@ -2,18 +2,6 @@
 
 import * as React from "react"
 import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react"
-import {
   LayoutDashboard,
   Megaphone,
   CalendarDays,
@@ -23,9 +11,8 @@ import {
   Settings,
 } from "lucide-react"
 import { NavMain } from "./nav-main"
-import { NavProjects } from "./nav-projects"
 import { NavUser } from "./nav-user"
-import { TeamSwitcher } from "./team-switcher"
+import { OrgSwitcher } from "./team-switcher"
 import {
   Sidebar,
   SidebarContent,
@@ -33,81 +20,62 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { UserOrganization } from "@/lib/types/organization"
 
-// This is sample data.
-const data = {
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  userOrgs: UserOrganization[]
+  activeSlug: string
   user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/org/[slug]",
-      icon: LayoutDashboard,
-    },
-    {
-      title: "Announcements",
-      url: "/org/[slug]/announcements",
-      icon: Megaphone,
-    },
-    {
-      title: "Events",
-      url: "/org/[slug]/events",
-      icon: CalendarDays,
-    },
-    {
-      title: "Members",
-      url: "/org/[slug]/members",
-      icon: Users,
-    },
-    {
-      title: "Join Requests",
-      url: "/org/[slug]/requests",
-      icon: UserPlus,
-    },
-    {
-      title: "Roles & Permissions",
-      url: "/org/[slug]/roles",
-      icon: Shield,
-    },
-    {
-      title: "Settings",
-      url: "/org/[slug]/settings",
-      icon: Settings,
-    },
-  ],
+    name: string
+    email: string
+    avatar: string
+  }
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  userOrgs,
+  activeSlug,
+  user,
+  ...props
+}: AppSidebarProps) {
+  const activeOrg =
+    userOrgs.find((o) => o.organization.slug === activeSlug) ?? userOrgs[0]
+
+  const navMain = React.useMemo(
+    () => [
+      { title: "Dashboard", url: `/org/${activeSlug}`, icon: LayoutDashboard },
+      {
+        title: "Announcements",
+        url: `/org/${activeSlug}/announcements`,
+        icon: Megaphone,
+      },
+      { title: "Events", url: `/org/${activeSlug}/events`, icon: CalendarDays },
+      { title: "Members", url: `/org/${activeSlug}/members`, icon: Users },
+      {
+        title: "Join Requests",
+        url: `/org/${activeSlug}/requests`,
+        icon: UserPlus,
+      },
+      {
+        title: "Roles & Permissions",
+        url: `/org/${activeSlug}/roles`,
+        icon: Shield,
+      },
+      { title: "Settings", url: `/org/${activeSlug}/settings`, icon: Settings },
+    ],
+    [activeSlug]
+  )
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <OrgSwitcher userOrgs={userOrgs} activeOrg={activeOrg} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

@@ -8,19 +8,8 @@ import {
   organization,
   organizationRoleEnum,
 } from "@/lib/db/schema/organization"
+import { UserOrganization } from "@/lib/types/organization"
 
-export type UserOrganization = {
-  role: (typeof organizationRoleEnum.enumValues)[number]
-  organization: {
-    id: string
-    name: string
-    slug: string
-    description: string | null
-    logoUrl: string | null
-    headerUrl: string | null
-    memberCount: number
-  }
-}
 
 /**
  * Returns every organization the given user is a member of, along with

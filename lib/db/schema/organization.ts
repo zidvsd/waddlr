@@ -8,6 +8,8 @@ export const organizationRoleEnum = pgEnum("organization_role", [
   "officer",
   "member",
 ])
+// lib/db/schema/organization.ts
+export type OrganizationRole = (typeof organizationRoleEnum.enumValues)[number]
 
 export const organizationVisibilityEnum = pgEnum("organization_visibility", [
   "public",

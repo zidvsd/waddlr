@@ -11,6 +11,7 @@ import { EmptyAnnouncement } from "@/components/ui/empty-announcement"
 import { OrganizationCard } from "@/components/cards/OrganizationCard"
 import { EventCard } from "@/components/cards/EventCard"
 import { format } from "date-fns"
+
 export default async function DashboardPage() {
   const session = await getServerSession()
   if (!session) {
