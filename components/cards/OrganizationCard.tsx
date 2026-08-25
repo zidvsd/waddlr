@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Heart } from "lucide-react"
-import { UserOrganization } from "@/app/actions/organizations"
+import { UserOrganization } from "@/lib/types/organization"
 import { JoinOrManageButton } from "../ui/join-manage-button"
 import { Button } from "../ui/button"
 import Image from "next/image"
