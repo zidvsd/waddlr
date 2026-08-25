@@ -48,7 +48,7 @@ export function DashboardNav({ profile }: { profile: Profile | null }) {
   }
 
   return (
-    <header className="surface-glass sticky top-0 z-50 border-b border-border/60">
+    <header className="sticky top-0 z-50 border-b border-border/60 bg-background">
       {/* Topbar */}
       <div className="container mx-auto flex h-14 items-center justify-between px-4 md:px-6">
         <Link href="/dashboard" className="flex items-center gap-2">

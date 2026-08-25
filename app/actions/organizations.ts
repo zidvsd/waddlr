@@ -10,7 +10,6 @@ import {
 } from "@/lib/db/schema/organization"
 import { UserOrganization } from "@/lib/types/organization"
 
-
 /**
  * Returns every organization the given user is a member of, along with
  * their role in each. Used on /dashboard for the "Your organizations" grid.
@@ -157,3 +156,4 @@ export async function getViewerRole(
 
   return membership?.role ?? null
 }
+

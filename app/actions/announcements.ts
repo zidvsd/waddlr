@@ -50,3 +50,31 @@ export async function getRecentAnnouncementsForUser(
     .orderBy(desc(announcement.createdAt))
     .limit(limit)
 }
+
+export async function getOrgAnnouncements(
+  organizationId: string,
+  opts: { limit?: number; offset?: number } = {}
+): Promise<UserAnnouncement[]> {
+  const limit = opts.limit ?? 20
+  const offset = opts.offset ?? 0
+
+  return await db
+    .select({
+      id: announcement.id,
+      organizationId: announcement.organizationId,
+      title: announcement.title,
+      body: announcement.body,
+      eventId: announcement.eventId,
+      createdBy: announcement.createdBy,
+      createdAt: announcement.createdAt,
+      updatedAt: announcement.updatedAt,
+      organizationName: organization.name,
+      organizationSlug: organization.slug,
+    })
+    .from(announcement)
+    .innerJoin(organization, eq(announcement.organizationId, organization.id))
+    .where(eq(announcement.organizationId, organizationId))
+    .orderBy(desc(announcement.createdAt))
+    .limit(limit)
+    .offset(offset)
+}

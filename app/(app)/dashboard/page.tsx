@@ -25,7 +25,6 @@ export default async function DashboardPage() {
     getUpcomingEventsForUser(userId, { limit: 4 }),
     getRecentAnnouncementsForUser(userId, { limit: 4 }),
   ])
-  console.log(announcements)
   const firstName = session.user.name?.split(" ")[0] ?? "there"
 
   return (
