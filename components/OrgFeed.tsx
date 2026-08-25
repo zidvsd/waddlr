@@ -12,13 +12,12 @@ import {
 import type { UserAnnouncement } from "@/app/actions/announcements"
 import type { OrgEvent } from "@/app/actions/events"
 import type { OrgMember } from "@/app/actions/members"
+import { useState } from "react"
+import { FeedPostModal } from "./modals/FeedPostModal"
+import { FeedItem } from "@/lib/types/feed"
 // ---------------------------------------------------------------------------
 // Unified feed item type
 // ---------------------------------------------------------------------------
-
-type FeedItem =
-  | { kind: "announcement"; createdAt: Date; data: UserAnnouncement }
-  | { kind: "event"; createdAt: Date; data: OrgEvent }
 
 function mergeFeed(
   announcements: UserAnnouncement[],
@@ -332,8 +331,9 @@ interface OrgFeedProps {
   userId?: string
   members: OrgMember[]
 }
-
 export function OrgFeed({ announcements, events, org, members }: OrgFeedProps) {
+  const [selectedPost, setSelectedPost] = useState<FeedItem | null>(null)
+
   const feed = mergeFeed(announcements, events)
 
   const upcomingEvents = events
@@ -344,32 +344,70 @@ export function OrgFeed({ announcements, events, org, members }: OrgFeedProps) {
     .slice(0, 3)
 
   return (
-    <div className="mx-auto">
-      <div className="flex gap-6 lg:gap-8">
-        {/* Feed column */}
-        <div className="min-w-0 flex-1 space-y-4">
-          {feed.length === 0 ? (
-            <EmptyFeed />
-          ) : (
-            feed.map((item) =>
-              item.kind === "announcement" ? (
-                <AnnouncementCard key={`a-${item.data.id}`} post={item.data} />
-              ) : (
-                <EventCard key={`e-${item.data.id}`} ev={item.data} />
+    <>
+      <div className="mx-auto">
+        <div className="flex gap-6 lg:gap-8">
+          <div className="min-w-0 flex-1 space-y-4">
+            {feed.length === 0 ? (
+              <EmptyFeed />
+            ) : (
+              feed.map((item) =>
+                item.kind === "announcement" ? (
+                  <div
+                    key={`a-${item.data.id}`}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => setSelectedPost(item)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault()
+                        setSelectedPost(item)
+                      }
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <AnnouncementCard post={item.data} />
+                  </div>
+                ) : (
+                  <div
+                    key={`e-${item.data.id}`}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => setSelectedPost(item)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault()
+                        setSelectedPost(item)
+                      }
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <EventCard ev={item.data} />
+                  </div>
+                )
               )
-            )
-          )}
-        </div>
-
-        {/* Sticky right sidebar — desktop only */}
-        <aside className="hidden w-64 shrink-0 lg:block xl:w-72">
-          <div className="sticky top-28 space-y-4">
-            <AboutCard org={org} />
-            <UpcomingCard events={upcomingEvents} />
-            <MembersCard members={members} />
+            )}
           </div>
-        </aside>
+
+          <aside className="hidden w-64 shrink-0 lg:block xl:w-72">
+            <div className="sticky top-28 space-y-4">
+              <AboutCard org={org} />
+              <UpcomingCard events={upcomingEvents} />
+              <MembersCard members={members} />
+            </div>
+          </aside>
+        </div>
       </div>
-    </div>
+      <FeedPostModal
+        post={selectedPost}
+        open={selectedPost !== null}
+        onClose={() => setSelectedPost(null)}
+        showActions
+        showLike
+        showComment
+        showShare
+        showComments
+      />
+    </>
   )
 }
