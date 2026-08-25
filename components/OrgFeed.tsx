@@ -15,9 +15,103 @@ import type { OrgMember } from "@/app/actions/members"
 import { useState } from "react"
 import { FeedPostModal } from "./modals/FeedPostModal"
 import { FeedItem } from "@/lib/types/feed"
+import Image from "next/image"
+import { Button } from "@base-ui/react"
 // ---------------------------------------------------------------------------
 // Unified feed item type
 // ---------------------------------------------------------------------------
+
+interface OrgFeedProps {
+  announcements: UserAnnouncement[]
+  events: OrgEvent[]
+  org: {
+    name: string
+    description: string | null
+    memberCount: number
+  }
+  userId?: string
+  members: OrgMember[]
+}
+export function OrgFeed({ announcements, events, org, members }: OrgFeedProps) {
+  const [selectedPost, setSelectedPost] = useState<FeedItem | null>(null)
+
+  const feed = mergeFeed(announcements, events)
+
+  const upcomingEvents = events
+    .filter((e) => new Date(e.startsAt) > new Date())
+    .sort(
+      (a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime()
+    )
+    .slice(0, 3)
+
+  return (
+    <>
+      <div className="mx-auto">
+        <div className="flex gap-6 lg:gap-8">
+          <div className="min-w-0 flex-1 space-y-4">
+            {feed.length === 0 ? (
+              <EmptyFeed />
+            ) : (
+              feed.map((item) =>
+                item.kind === "announcement" ? (
+                  <div
+                    key={`a-${item.data.id}`}
+                    role="Button"
+                    tabIndex={0}
+                    onClick={() => setSelectedPost(item)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault()
+                        setSelectedPost(item)
+                      }
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <AnnouncementCard post={item.data} />
+                  </div>
+                ) : (
+                  <div
+                    key={`e-${item.data.id}`}
+                    role="Button"
+                    tabIndex={0}
+                    onClick={() => setSelectedPost(item)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault()
+                        setSelectedPost(item)
+                      }
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <EventCard ev={item.data} />
+                  </div>
+                )
+              )
+            )}
+          </div>
+
+          <aside className="hidden w-64 shrink-0 lg:block xl:w-72">
+            <div className="sticky top-28 space-y-4">
+              <AboutCard org={org} />
+              <UpcomingCard events={upcomingEvents} />
+              <MembersCard members={members} />
+            </div>
+          </aside>
+        </div>
+      </div>
+      <FeedPostModal
+        post={selectedPost}
+        open={selectedPost !== null}
+        onClose={() => setSelectedPost(null)}
+        showActions
+        showLike
+        showComment
+        showShare
+        showComments
+      />
+    </>
+  )
+}
 
 function mergeFeed(
   announcements: UserAnnouncement[],
@@ -53,7 +147,6 @@ const ROLE_COLORS: Record<string, string> = {
 // ---------------------------------------------------------------------------
 // Cards
 // ---------------------------------------------------------------------------
-
 function AnnouncementCard({ post }: { post: UserAnnouncement }) {
   return (
     <article className="rounded-xl border border-border bg-card p-5 text-card-foreground shadow-sm transition-colors">
@@ -79,9 +172,9 @@ function AnnouncementCard({ post }: { post: UserAnnouncement }) {
             </p>
           </div>
         </div>
-        <button className="rounded-md p-1 text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground">
+        <Button className="rounded-md p-1 text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground">
           <MoreHorizontal className="size-4" />
-        </button>
+        </Button>
       </div>
 
       {/* Body */}
@@ -92,6 +185,16 @@ function AnnouncementCard({ post }: { post: UserAnnouncement }) {
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
           {post.body}
         </p>
+      </div>
+
+      {/* Meta */}
+      <div className="mt-4 flex flex-wrap gap-3">
+        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+          <Clock className="size-3.5 shrink-0" />
+          <span>
+            {format(new Date(post.createdAt), "MMM d, yyyy · h:mm a")}
+          </span>
+        </div>
       </div>
 
       {/* Linked event badge */}
@@ -106,7 +209,6 @@ function AnnouncementCard({ post }: { post: UserAnnouncement }) {
     </article>
   )
 }
-
 function EventCard({ ev }: { ev: OrgEvent }) {
   const start = new Date(ev.startsAt)
   const end = ev.endsAt ? new Date(ev.endsAt) : null
@@ -115,11 +217,15 @@ function EventCard({ ev }: { ev: OrgEvent }) {
     <article className="overflow-hidden rounded-xl border border-border bg-card text-card-foreground shadow-sm transition-colors">
       {ev.thumbnailUrl && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={ev.thumbnailUrl}
-          alt=""
-          className="h-44 w-full object-cover"
-        />
+        <div className="relative h-44 w-full">
+          <Image
+            src={ev.thumbnailUrl}
+            alt={ev.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 672px"
+            className="object-cover"
+          />
+        </div>
       )}
       <div className="p-5">
         {/* Header */}
@@ -144,9 +250,9 @@ function EventCard({ ev }: { ev: OrgEvent }) {
               </p>
             </div>
           </div>
-          <button className="rounded-md p-1 text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground">
+          <Button className="rounded-md p-1 text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground">
             <MoreHorizontal className="size-4" />
-          </button>
+          </Button>
         </div>
 
         {/* Body */}
@@ -282,9 +388,11 @@ function MembersCard({ members }: { members: OrgMember[] }) {
               <div className="relative shrink-0">
                 {m.avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     src={m.avatarUrl}
-                    alt=""
+                    alt={m.displayName ?? "Member"}
+                    width={28}
+                    height={28}
                     className="size-7 rounded-full object-cover"
                   />
                 ) : (
@@ -319,95 +427,3 @@ function MembersCard({ members }: { members: OrgMember[] }) {
 // ---------------------------------------------------------------------------
 // Root export
 // ---------------------------------------------------------------------------
-
-interface OrgFeedProps {
-  announcements: UserAnnouncement[]
-  events: OrgEvent[]
-  org: {
-    name: string
-    description: string | null
-    memberCount: number
-  }
-  userId?: string
-  members: OrgMember[]
-}
-export function OrgFeed({ announcements, events, org, members }: OrgFeedProps) {
-  const [selectedPost, setSelectedPost] = useState<FeedItem | null>(null)
-
-  const feed = mergeFeed(announcements, events)
-
-  const upcomingEvents = events
-    .filter((e) => new Date(e.startsAt) > new Date())
-    .sort(
-      (a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime()
-    )
-    .slice(0, 3)
-
-  return (
-    <>
-      <div className="mx-auto">
-        <div className="flex gap-6 lg:gap-8">
-          <div className="min-w-0 flex-1 space-y-4">
-            {feed.length === 0 ? (
-              <EmptyFeed />
-            ) : (
-              feed.map((item) =>
-                item.kind === "announcement" ? (
-                  <div
-                    key={`a-${item.data.id}`}
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => setSelectedPost(item)}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter" || event.key === " ") {
-                        event.preventDefault()
-                        setSelectedPost(item)
-                      }
-                    }}
-                    className="cursor-pointer"
-                  >
-                    <AnnouncementCard post={item.data} />
-                  </div>
-                ) : (
-                  <div
-                    key={`e-${item.data.id}`}
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => setSelectedPost(item)}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter" || event.key === " ") {
-                        event.preventDefault()
-                        setSelectedPost(item)
-                      }
-                    }}
-                    className="cursor-pointer"
-                  >
-                    <EventCard ev={item.data} />
-                  </div>
-                )
-              )
-            )}
-          </div>
-
-          <aside className="hidden w-64 shrink-0 lg:block xl:w-72">
-            <div className="sticky top-28 space-y-4">
-              <AboutCard org={org} />
-              <UpcomingCard events={upcomingEvents} />
-              <MembersCard members={members} />
-            </div>
-          </aside>
-        </div>
-      </div>
-      <FeedPostModal
-        post={selectedPost}
-        open={selectedPost !== null}
-        onClose={() => setSelectedPost(null)}
-        showActions
-        showLike
-        showComment
-        showShare
-        showComments
-      />
-    </>
-  )
-}

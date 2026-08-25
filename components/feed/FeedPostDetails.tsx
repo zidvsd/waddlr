@@ -2,6 +2,7 @@ import { format } from "date-fns"
 import { Calendar, Clock, MapPin } from "lucide-react"
 
 import type { OrgEvent } from "@/app/actions/events"
+import type { UserAnnouncement } from "@/app/actions/announcements"
 
 interface EventDetailsCardProps {
   event: OrgEvent
@@ -36,6 +37,33 @@ export function EventDetailsCard({ event }: EventDetailsCardProps) {
           </div>
         </div>
       )}
+    </div>
+  )
+}
+
+interface AnnouncementDetailsCardProps {
+  announcement: UserAnnouncement
+}
+
+export function AnnouncementDetailsCard({
+  announcement,
+}: AnnouncementDetailsCardProps) {
+  return (
+    <div className="mt-6 space-y-4 rounded-xl border border-border bg-muted/50 p-4">
+      <div className="flex items-start gap-3">
+        <Clock className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
+
+        <div className="min-w-0">
+          <p className="text-xs font-medium text-foreground">Posted</p>
+
+          <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
+            {format(
+              new Date(announcement.createdAt),
+              "EEEE, MMMM d, yyyy · h:mm a"
+            )}
+          </p>
+        </div>
+      </div>
     </div>
   )
 }

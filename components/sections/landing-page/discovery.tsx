@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 
 const ORGS = [
@@ -70,9 +71,9 @@ export function Discovery() {
                 {org.name}
               </h3>
               <p className="mt-1 text-sm text-muted-foreground">{org.tag}</p>
-              <button className="mt-4 w-full rounded-full border border-border bg-card py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted">
+              <Button className="mt-4 w-full rounded-full border border-border bg-card py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted">
                 Visit portal
-              </button>
+              </Button>
             </div>
           </div>
         ))}

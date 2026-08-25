@@ -20,6 +20,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import type { UserOrganization } from "@/lib/types/organization"
+import Image from "next/image"
 export function OrgSwitcher({
   userOrgs,
   activeOrg,
@@ -45,9 +46,11 @@ export function OrgSwitcher({
                 <div className="flex aspect-square size-8 items-center justify-center overflow-hidden rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   {activeOrg.organization.logoUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <Image
                       src={activeOrg.organization.logoUrl}
-                      alt=""
+                      alt={activeOrg.organization.name}
+                      width={32}
+                      height={32}
                       className="size-full object-cover"
                     />
                   ) : (
@@ -87,9 +90,11 @@ export function OrgSwitcher({
                   <div className="flex size-6 items-center justify-center overflow-hidden rounded-md border">
                     {uo.organization.logoUrl ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      <Image
                         src={uo.organization.logoUrl}
-                        alt=""
+                        alt={uo.organization.name}
+                        width={24}
+                        height={24}
                         className="size-full object-cover"
                       />
                     ) : (

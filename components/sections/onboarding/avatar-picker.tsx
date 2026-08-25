@@ -4,6 +4,7 @@ import { useState } from "react"
 import { uploadAvatar } from "@/app/actions/upload-avatar"
 import { initials } from "@/lib/utils"
 import { Spinner } from "@/components/ui/spinner"
+import Image from "next/image"
 export function AvatarPicker({
   displayName,
   avatarUrl,
@@ -63,9 +64,11 @@ export function AvatarPicker({
             <Spinner />
           ) : avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={avatarUrl}
-              alt=""
+              alt={displayName || "Profile"}
+              width={64}
+              height={64}
               className="h-full w-full object-cover"
             />
           ) : (

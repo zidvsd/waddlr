@@ -16,7 +16,11 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { CommentComposer } from "../feed/CommentComposer"
 import { FeedCommentsSidebar } from "../feed/FeedCommentsSidebar"
 import { FeedPostActions } from "../feed/FeedPostActions"
-import { EventDetailsCard, LinkedEventCard } from "../feed/FeedPostDetails"
+import {
+  AnnouncementDetailsCard,
+  EventDetailsCard,
+  LinkedEventCard,
+} from "../feed/FeedPostDetails"
 import { FeedPostHeader } from "../feed/FeedPostHeader"
 import type { Comment, FeedPost } from "@/lib/types/feed"
 
@@ -164,11 +168,12 @@ export function FeedPostModal({
                     </p>
                   )}
                 </div>
-
                 {!isAnnouncement && event && <EventDetailsCard event={event} />}
 
+                {isAnnouncement && (
+                  <AnnouncementDetailsCard announcement={post.data} />
+                )}
                 {isAnnouncement && post.data.eventId && <LinkedEventCard />}
-
                 {showActions && (
                   <FeedPostActions
                     liked={liked}

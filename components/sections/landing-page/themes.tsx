@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 
 export const THEMES = [
@@ -126,7 +127,7 @@ function ThemeCard({ theme }: { theme: (typeof THEMES)[number] }) {
               />
             ))}
           </div>
-          <button
+          <Button
             className="rounded-full px-3 py-1.5 text-xs font-medium"
             style={{
               background: theme.accent,
@@ -134,7 +135,7 @@ function ThemeCard({ theme }: { theme: (typeof THEMES)[number] }) {
             }}
           >
             Join
-          </button>
+          </Button>
         </div>
       </div>
       <div className="flex items-center justify-between border-t border-border bg-card px-6 py-4">

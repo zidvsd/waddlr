@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Button } from "../ui/button"
 const TABS = [
   { label: "Dashboard", href: "/dashboard" },
   { label: "Discover", href: "/discover" },
@@ -110,7 +111,7 @@ export function DashboardNav({ profile }: { profile: Profile | null }) {
           <div className="flex items-center justify-between gap-3">
             <div className="flex flex-wrap gap-2">
               {DISCOVER_FILTERS.map((filter) => (
-                <button
+                <Button
                   key={filter.value}
                   onClick={() => setParam("tab", filter.value)}
                   className={`rounded-full px-3.5 py-1.5 text-sm transition-colors ${
@@ -120,7 +121,7 @@ export function DashboardNav({ profile }: { profile: Profile | null }) {
                   }`}
                 >
                   {filter.label}
-                </button>
+                </Button>
               ))}
             </div>
 
