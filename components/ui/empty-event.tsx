@@ -19,8 +19,8 @@ export function EmptyEvent() {
         </EmptyMedia>
         <EmptyTitle>No Events Yet</EmptyTitle>
         <EmptyDescription>
-          No upcoming events yet. Get started by joining your first
-          organization.
+          No upcoming events yet. Join more organizations to see their events or
+          suggest an event to be added.
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent className="flex-row justify-center gap-2">

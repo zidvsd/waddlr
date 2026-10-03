@@ -1,3 +1,5 @@
+import { Suspense } from "react"
+import { notFound } from "next/navigation"
 import {
   getOrgAnnouncements,
   getOrgEvents,
@@ -5,20 +7,31 @@ import {
   getOrganizationBySlug,
 } from "@/lib/queries"
 import { getServerSession } from "@/lib/auth/get-session"
-import { notFound } from "next/navigation"
 import { OrgFeed } from "@/components/OrgFeed"
-export default async function OrgPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = await params
-  const session = await getServerSession()
+import { OrgFeedSkeleton } from "@/components/skeletons/org-feed-skeleton"
 
-  const org = await getOrganizationBySlug(slug)
+type Org = NonNullable<Awaited<ReturnType<typeof getOrganizationBySlug>>>
+
+type OrgPageProps = {
+  params: Promise<{ slug: string }>
+}
+
+export default async function OrgPage({ params }: OrgPageProps) {
+  const { slug } = await params
+
+  const org = await getOrganizationBySlug(slug) // deduped with layout via cache()
   if (!org) notFound()
 
-  const [announcements, events, members] = await Promise.all([
+  return (
+    <Suspense fallback={<OrgFeedSkeleton />}>
+      <OrgFeedLoader org={org} />
+    </Suspense>
+  )
+}
+
+async function OrgFeedLoader({ org }: { org: Org }) {
+  const [session, announcements, events, members] = await Promise.all([
+    getServerSession(),
     getOrgAnnouncements(org.id, { limit: 20 }),
     getOrgEvents(org.id, { limit: 20 }),
     getOrgMembers(org.id, { limit: 20 }),
@@ -29,8 +42,8 @@ export default async function OrgPage({
       org={org}
       announcements={announcements}
       events={events}
-      userId={session?.user.id}
       members={members}
+      userId={session?.user.id}
     />
   )
 }

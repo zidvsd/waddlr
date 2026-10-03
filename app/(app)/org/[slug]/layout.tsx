@@ -14,12 +14,11 @@ export default async function OrgLayout({
 }) {
   const { slug } = await params
 
-  const org = await getOrganizationBySlug(slug)
-
+  const [org, user] = await Promise.all([
+    getOrganizationBySlug(slug),
+    getCurrentUser(),
+  ])
   if (!org) notFound()
-
-  const user = await getCurrentUser()
-
   const viewerRole = await getViewerRole(org.id, user?.id)
 
   const canManage =
@@ -35,6 +34,7 @@ export default async function OrgLayout({
       {org.headerUrl ? (
         <div className="relative h-28 w-full">
           <Image
+            loading="eager"
             src={org.headerUrl}
             alt={org.name}
             fill
