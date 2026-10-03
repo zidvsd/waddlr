@@ -1,12 +1,23 @@
-// app/app/layout.tsx
+import { Suspense } from "react"
 import { getServerSession } from "@/lib/auth/get-session"
 import { redirect } from "next/navigation"
 import { DashboardNav } from "@/components/layout/nav-dashboard"
-import { db } from "@/lib/db"
-import { profile } from "@/lib/db/schema"
-import { eq } from "drizzle-orm"
-import { getProfile } from "../actions/profile"
-export default async function DashboardLayout({
+import { getProfile } from "@/lib/queries"
+
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <Suspense fallback={<DashboardSkeleton />}>
+      {" "}
+      <AuthenticatedDashboard>{children}</AuthenticatedDashboard>{" "}
+    </Suspense>
+  )
+}
+
+async function AuthenticatedDashboard({
   children,
 }: {
   children: React.ReactNode
@@ -23,8 +34,23 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex min-h-screen flex-col">
+      {" "}
       <DashboardNav profile={userProfile} />
-      {children}
+      {children}{" "}
+    </div>
+  )
+}
+
+function DashboardSkeleton() {
+  return (
+    <div className="min-h-screen animate-pulse bg-background">
+      {" "}
+      <div className="h-14 border-b bg-muted/40" />{" "}
+      <main className="container mx-auto p-6">
+        {" "}
+        <div className="h-8 w-48 rounded bg-muted" />{" "}
+        <div className="mt-6 h-32 rounded-lg bg-muted" />{" "}
+      </main>{" "}
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { format } from "date-fns"
-import type { UserAnnouncement } from "@/app/actions/announcements"
+import type { UserAnnouncement } from "@/lib/queries"
 import Link from "next/link"
 export function AnnouncementCard({
   announcement,

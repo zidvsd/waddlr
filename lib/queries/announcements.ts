@@ -1,8 +1,12 @@
-"use server"
-
+import { cacheLife, cacheTag } from "next/cache"
+import { desc, eq } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { announcement, organization, organizationMember } from "@/lib/db/schema"
-import { and, desc, eq } from "drizzle-orm"
+import {
+  cacheTags,
+  organizationAnnouncementsTag,
+  userAnnouncementsTag,
+} from "./cache-tags"
 
 export type UserAnnouncement = {
   id: string
@@ -21,22 +25,27 @@ export async function getRecentAnnouncementsForUser(
   userId: string,
   opts: { limit?: number } = {}
 ): Promise<UserAnnouncement[]> {
-  const limit = opts.limit ?? 4
+  return getCachedRecentAnnouncementsForUser(userId, opts.limit ?? 4)
+}
 
-  return await db
+async function getCachedRecentAnnouncementsForUser(
+  userId: string,
+  limit: number
+): Promise<UserAnnouncement[]> {
+  "use cache"
+  cacheLife("minutes")
+  cacheTag(cacheTags.announcements, userAnnouncementsTag(userId))
+
+  return db
     .select({
       id: announcement.id,
       organizationId: announcement.organizationId,
-
       title: announcement.title,
       body: announcement.body,
-
       eventId: announcement.eventId,
       createdBy: announcement.createdBy,
-
       createdAt: announcement.createdAt,
       updatedAt: announcement.updatedAt,
-
       organizationName: organization.name,
       organizationSlug: organization.slug,
     })
@@ -55,10 +64,26 @@ export async function getOrgAnnouncements(
   organizationId: string,
   opts: { limit?: number; offset?: number } = {}
 ): Promise<UserAnnouncement[]> {
-  const limit = opts.limit ?? 20
-  const offset = opts.offset ?? 0
+  return getCachedOrgAnnouncements(
+    organizationId,
+    opts.limit ?? 20,
+    opts.offset ?? 0
+  )
+}
 
-  return await db
+async function getCachedOrgAnnouncements(
+  organizationId: string,
+  limit: number,
+  offset: number
+): Promise<UserAnnouncement[]> {
+  "use cache"
+  cacheLife("minutes")
+  cacheTag(
+    cacheTags.announcements,
+    organizationAnnouncementsTag(organizationId)
+  )
+
+  return db
     .select({
       id: announcement.id,
       organizationId: announcement.organizationId,

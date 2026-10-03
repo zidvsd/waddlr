@@ -83,33 +83,33 @@
   /* Indigo #4338CA */
   --primary-foreground: oklch(1 0 0);
 
-  --secondary: oklch(0.971 0.003 286.350);
+  --secondary: oklch(0.971 0.003 286.35);
   /* Mist #F5F5F7 */
   --secondary-foreground: oklch(0.227 0.004 286.092);
 
-  --muted: oklch(0.971 0.003 286.350);
+  --muted: oklch(0.971 0.003 286.35);
   --muted-foreground: oklch(0.529 0.008 286.133);
 
-  --accent: oklch(0.971 0.003 286.350);
+  --accent: oklch(0.971 0.003 286.35);
   --accent-foreground: oklch(0.227 0.004 286.092);
 
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0.003 286.347);
   --input: oklch(0.922 0.003 286.347);
-  --ring: oklch(0.680 0.158 276.935);
+  --ring: oklch(0.68 0.158 276.935);
   /* Indigo-400, brand-tinted focus ring */
 
   /* Brand accent colors, available for chips/badges/illustration accents */
-  --sunbeam: oklch(0.830 0.161 80.287);
+  --sunbeam: oklch(0.83 0.161 80.287);
   /* #FDBA2D */
   --sunbeam-foreground: oklch(0.227 0.004 286.092);
-  --violet: oklch(0.627 0.233 303.900);
+  --violet: oklch(0.627 0.233 303.9);
   /* #A855F7 */
   --violet-foreground: oklch(1 0 0);
   --sky: oklch(0.754 0.139 232.661);
   /* #38BDF8 */
   --sky-foreground: oklch(0.227 0.004 286.092);
-  --mist: oklch(0.971 0.003 286.350);
+  --mist: oklch(0.971 0.003 286.35);
   /* #F5F5F7 */
   --mist-foreground: oklch(0.227 0.004 286.092);
   --charcoal: oklch(0.227 0.004 286.092);
@@ -118,13 +118,13 @@
   /* Analytics charts cycle through the full brand palette */
   --chart-1: oklch(0.457 0.215 277.023);
   /* Indigo */
-  --chart-2: oklch(0.627 0.233 303.900);
+  --chart-2: oklch(0.627 0.233 303.9);
   /* Violet */
   --chart-3: oklch(0.754 0.139 232.661);
   /* Sky */
-  --chart-4: oklch(0.830 0.161 80.287);
+  --chart-4: oklch(0.83 0.161 80.287);
   /* Sunbeam */
-  --chart-5: oklch(0.680 0.158 276.935);
+  --chart-5: oklch(0.68 0.158 276.935);
   /* Indigo-400 */
 
   --radius: 0.75rem;
@@ -133,24 +133,32 @@
   --sidebar-foreground: oklch(0.227 0.004 286.092);
   --sidebar-primary: oklch(0.457 0.215 277.023);
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.971 0.003 286.350);
+  --sidebar-accent: oklch(0.971 0.003 286.35);
   --sidebar-accent-foreground: oklch(0.227 0.004 286.092);
   --sidebar-border: oklch(0.922 0.003 286.347);
-  --sidebar-ring: oklch(0.680 0.158 276.935);
+  --sidebar-ring: oklch(0.68 0.158 276.935);
 
   /* Hero/CTA gradient — use sparingly, never on body copy or dense data */
-  --gradient-brand: linear-gradient(135deg, oklch(0.457 0.215 277.023) 0%, oklch(0.627 0.233 303.900) 100%);
-  --gradient-brand-soft: linear-gradient(135deg, oklch(0.962 0.018 272.314) 0%, oklch(0.95 0.03 303.9) 100%);
+  --gradient-brand: linear-gradient(
+    135deg,
+    oklch(0.457 0.215 277.023) 0%,
+    oklch(0.627 0.233 303.9) 100%
+  );
+  --gradient-brand-soft: linear-gradient(
+    135deg,
+    oklch(0.962 0.018 272.314) 0%,
+    oklch(0.95 0.03 303.9) 100%
+  );
 }
 
 .dark {
   --background: oklch(0.227 0.004 286.092);
   /* Charcoal */
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.270 0.007 285.898);
+  --card: oklch(0.27 0.007 285.898);
   /* slightly lighter than bg, Apple-style elevation */
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.270 0.007 285.898);
+  --popover: oklch(0.27 0.007 285.898);
   --popover-foreground: oklch(0.985 0 0);
 
   --primary: oklch(0.585 0.204 277.117);
@@ -169,24 +177,24 @@
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.680 0.158 276.935);
+  --ring: oklch(0.68 0.158 276.935);
 
-  --sunbeam: oklch(0.830 0.161 80.287);
+  --sunbeam: oklch(0.83 0.161 80.287);
   --sunbeam-foreground: oklch(0.227 0.004 286.092);
   --violet: oklch(0.722 0.177 305.504);
   /* Violet-400, lifted for dark bg */
   --violet-foreground: oklch(0.227 0.004 286.092);
   --sky: oklch(0.754 0.139 232.661);
   --sky-foreground: oklch(0.227 0.004 286.092);
-  --mist: oklch(0.270 0.007 285.898);
+  --mist: oklch(0.27 0.007 285.898);
   --mist-foreground: oklch(0.985 0 0);
   --charcoal: oklch(0.985 0 0);
 
   --chart-1: oklch(0.585 0.204 277.117);
   --chart-2: oklch(0.722 0.177 305.504);
   --chart-3: oklch(0.754 0.139 232.661);
-  --chart-4: oklch(0.830 0.161 80.287);
-  --chart-5: oklch(0.680 0.158 276.935);
+  --chart-4: oklch(0.83 0.161 80.287);
+  --chart-5: oklch(0.68 0.158 276.935);
 
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
@@ -195,10 +203,18 @@
   --sidebar-accent: oklch(0.269 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.680 0.158 276.935);
+  --sidebar-ring: oklch(0.68 0.158 276.935);
 
-  --gradient-brand: linear-gradient(135deg, oklch(0.585 0.204 277.117) 0%, oklch(0.722 0.177 305.504) 100%);
-  --gradient-brand-soft: linear-gradient(135deg, oklch(0.32 0.06 277) 0%, oklch(0.32 0.07 303.9) 100%);
+  --gradient-brand: linear-gradient(
+    135deg,
+    oklch(0.585 0.204 277.117) 0%,
+    oklch(0.722 0.177 305.504) 100%
+  );
+  --gradient-brand-soft: linear-gradient(
+    135deg,
+    oklch(0.32 0.06 277) 0%,
+    oklch(0.32 0.07 303.9) 100%
+  );
 }
 
 @layer base {
@@ -207,14 +223,12 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background font-sans text-foreground;
   }
 
   html {
     @apply font-sans;
   }
-
-
 }
 
 /*
@@ -232,8 +246,8 @@
     @media (min-width: 640px) {
       padding-inline: 1.5rem;
     }
-    @media (min-width:  768px) {
-          padding-inline: 1.75rem;
+    @media (min-width: 768px) {
+      padding-inline: 1.75rem;
     }
     @media (min-width: 1024px) {
       padding-inline: 2rem;
@@ -268,8 +282,10 @@
 
   /* Apple-style elevated surface: quiet shadow, no border, sits above the page */
   .surface-card {
-    @apply bg-card text-card-foreground rounded-2xl;
-    box-shadow: 0 1px 2px oklch(0 0 0 / 0.04), 0 8px 24px oklch(0 0 0 / 0.06);
+    @apply rounded-2xl bg-card text-card-foreground;
+    box-shadow:
+      0 1px 2px oklch(0 0 0 / 0.04),
+      0 8px 24px oklch(0 0 0 / 0.06);
   }
 
   /* Frosted sticky nav / header, Apple-style */
@@ -281,12 +297,12 @@
 
   /* Sunbeam pop — notification dots, "new" badges, Pico accents. Use once per view. */
   .badge-sunbeam {
-    @apply bg-sunbeam text-sunbeam-foreground rounded-full;
+    @apply rounded-full bg-sunbeam text-sunbeam-foreground;
   }
 
   /* Consistent, brand-tinted keyboard focus state */
   .focus-ring {
-    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+    @apply ring-2 ring-ring ring-offset-2 ring-offset-background outline-none;
   }
 
   /* Data/utility text — timestamps, certificate codes, attendance counts */
@@ -294,8 +310,6 @@
     @apply font-mono tabular-nums;
   }
 }
-
-
 
 ::view-transition-old(root),
 ::view-transition-new(root) {

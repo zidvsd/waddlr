@@ -1,11 +1,10 @@
-// app/actions/members.ts
-"use server"
-
+import { cacheLife, cacheTag } from "next/cache"
+import { asc, eq } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { organizationMember } from "@/lib/db/schema"
 import { profile } from "@/lib/db/schema/profile"
-import { eq } from "drizzle-orm"
 import type { OrganizationRole } from "@/lib/db/schema/organization"
+import { cacheTags, organizationMembersTag } from "./cache-tags"
 
 export type OrgMember = {
   id: string
@@ -15,17 +14,23 @@ export type OrgMember = {
   avatarUrl: string | null
 }
 
-const ROLE_ORDER: Record<OrganizationRole, number> = {
-  organization_admin: 0,
-  officer: 1,
-  member: 2,
-}
-
 export async function getOrgMembers(
   organizationId: string,
   opts: { limit?: number } = {}
 ): Promise<OrgMember[]> {
-  const limit = opts.limit ?? 10
+  return getCachedOrgMembers(organizationId, opts.limit ?? 10)
+}
+
+async function getCachedOrgMembers(
+  organizationId: string,
+  limit: number
+): Promise<OrgMember[]> {
+  "use cache"
+  cacheLife("minutes")
+  cacheTag(
+    cacheTags.organizationMembers,
+    organizationMembersTag(organizationId)
+  )
 
   const rows = await db
     .select({
@@ -38,8 +43,9 @@ export async function getOrgMembers(
     .from(organizationMember)
     .leftJoin(profile, eq(profile.userId, organizationMember.userId))
     .where(eq(organizationMember.organizationId, organizationId))
+    .orderBy(asc(organizationMember.role), asc(organizationMember.joinedAt))
+    .limit(limit)
 
+  cacheTag(...rows.map((row) => `profile:${row.userId}`))
   return rows
-    .sort((a, b) => (ROLE_ORDER[a.role] ?? 99) - (ROLE_ORDER[b.role] ?? 99))
-    .slice(0, limit)
 }

@@ -1,7 +1,3 @@
 export default function Page() {
-  return (
-    <div className="container">
-      Announcements Page
-    </div>
-  );
+  return <div className="container">Announcements Page</div>
 }

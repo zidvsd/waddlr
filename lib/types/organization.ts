@@ -37,4 +37,3 @@ export type UserOrganization = {
     memberCount: number
   }
 }
-

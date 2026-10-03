@@ -1,10 +1,12 @@
 // actions/profile.ts
 "use server"
 
+import { updateTag } from "next/cache"
 import { db } from "@/lib/db"
 import { profile } from "@/lib/db/schema/profile"
 import { eq } from "drizzle-orm"
 import { getCurrentUser } from "@/lib/auth/get-session"
+import { profileTag } from "@/lib/queries/cache-tags"
 type CompleteOnboardingInput = {
   displayName: string
   username: string
@@ -61,5 +63,6 @@ export async function completeOnboarding(input: CompleteOnboardingInput) {
     })
     .returning()
 
+  updateTag(profileTag(user.id))
   return updated
 }

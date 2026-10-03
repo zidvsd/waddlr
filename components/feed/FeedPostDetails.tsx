@@ -1,8 +1,7 @@
 import { format } from "date-fns"
 import { Calendar, Clock, MapPin } from "lucide-react"
 
-import type { OrgEvent } from "@/app/actions/events"
-import type { UserAnnouncement } from "@/app/actions/announcements"
+import type { OrgEvent, UserAnnouncement } from "@/lib/queries"
 
 interface EventDetailsCardProps {
   event: OrgEvent

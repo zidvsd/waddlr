@@ -7,9 +7,13 @@
 // fetch on every load.
 
 import { redirect } from "next/navigation"
+
 import { getServerSession } from "@/lib/auth/get-session"
-import { getProfile } from "@/app/actions/profile"
+import { getProfile } from "@/lib/queries"
 import { OnboardingView } from "@/components/OnBoardingForm"
+
+export const instant = false
+
 export default async function OnboardingPage() {
   const session = await getServerSession()
 

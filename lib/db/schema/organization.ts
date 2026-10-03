@@ -54,10 +54,7 @@ export const organization = pgTable(
       .$onUpdate(() => new Date())
       .notNull(),
   },
-  (table) => [
-    index("organization_ownerId_idx").on(table.ownerId),
-    index("organization_slug_idx").on(table.slug),
-  ]
+  (table) => [index("organization_ownerId_idx").on(table.ownerId)]
 )
 
 export const organizationRelations = relations(organization, ({ one }) => ({

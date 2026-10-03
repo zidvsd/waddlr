@@ -45,9 +45,7 @@ export function Footer() {
           ))}
         </div>
         <div className="mt-14 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-6 text-xs text-muted-foreground">
-          <span>
-            © {new Date().getFullYear()} Waddlr. Made for student leaders.
-          </span>
+          <span>© 2026 Waddlr. Made for student leaders.</span>
           <span>Built with care.</span>
         </div>
       </div>

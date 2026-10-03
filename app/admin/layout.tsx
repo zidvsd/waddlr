@@ -1,7 +1,8 @@
-// app/app/layout.tsx
 import { getServerSession } from "@/lib/auth/get-session"
 import { redirect } from "next/navigation"
-import { DashboardNav } from "@/components/layout/nav-dashboard"
+
+export const instant = false
+
 export default async function DashboardLayout({
   children,
 }: {
@@ -9,7 +10,9 @@ export default async function DashboardLayout({
 }) {
   const session = await getServerSession()
 
-  if (!session) redirect("/login")
+  if (!session) {
+    redirect("/login")
+  }
 
   return <div className="flex min-h-screen flex-col">{children}</div>
 }

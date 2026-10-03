@@ -3,10 +3,7 @@ import { getCurrentUser } from "@/lib/auth/get-session"
 import { OrgTabs } from "@/components/ui/org-tabs"
 import { JoinOrManageButton } from "@/components/ui/join-manage-button"
 import { AvatarPlaceholder } from "@/components/ui/avatar-placeholder"
-import {
-  getViewerRole,
-  getOrganizationBySlug,
-} from "@/app/actions/organizations"
+import { getOrganizationBySlug, getViewerRole } from "@/lib/queries"
 import Image from "next/image"
 export default async function OrgLayout({
   children,
@@ -74,7 +71,6 @@ export default async function OrgLayout({
             />
           </div>
         </div>
-
         {/* Organization name */}
         <div className="mt-2.5 flex items-center gap-2">
           <h1 className="text-[15px] font-medium text-foreground">
@@ -89,24 +85,25 @@ export default async function OrgLayout({
                 : "Private"}
           </span>
         </div>
-
         {/* Description */}
         <p className="mt-1 text-sm text-muted-foreground">{org.description}</p>
-
+        {/* Members */}
+        ```
         {/* Members */}
         <div className="mt-2.5 flex items-center gap-2">
           <div className="flex -space-x-1.5">
             {org.previewMembers.map((member) => (
               <div
                 key={member.id}
-                className="size-6 overflow-hidden rounded-full border-2 border-background"
+                className="relative size-6 overflow-hidden rounded-full border-2 border-background"
               >
                 {member.avatarUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
                   <Image
                     src={member.avatarUrl}
                     alt={member.displayName ?? "Member"}
-                    className="size-full object-cover"
+                    fill
+                    sizes="24px"
+                    className="object-cover"
                   />
                 ) : (
                   <AvatarPlaceholder name={member.displayName ?? "Member"} />
@@ -114,7 +111,6 @@ export default async function OrgLayout({
               </div>
             ))}
           </div>
-
           <span className="text-xs text-muted-foreground">
             {org.memberCount} members
           </span>

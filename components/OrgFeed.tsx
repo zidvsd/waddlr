@@ -9,9 +9,7 @@ import {
   Clock,
   Users,
 } from "lucide-react"
-import type { UserAnnouncement } from "@/app/actions/announcements"
-import type { OrgEvent } from "@/app/actions/events"
-import type { OrgMember } from "@/app/actions/members"
+import type { OrgMember, OrgEvent, UserAnnouncement } from "@/lib/queries"
 import { useState } from "react"
 import { FeedPostModal } from "./modals/FeedPostModal"
 import { FeedItem } from "@/lib/types/feed"

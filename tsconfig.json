@@ -29,7 +29,8 @@
     "**/*.tsx",
     "**/*.mts",
     ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
-, "app/(auth)/signup"  ],
+    ".next/dev/types/**/*.ts",
+    "app/(auth)/signup"
+  ],
   "exclude": ["node_modules"]
 }

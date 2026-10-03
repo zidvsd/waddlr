@@ -33,7 +33,11 @@ export const organizationMember = pgTable(
   },
   (table) => [
     index("organization_member_userId_idx").on(table.userId),
-    index("organization_member_organizationId_idx").on(table.organizationId),
+    index("organization_member_organizationId_role_idx").on(
+      table.organizationId,
+      table.role,
+      table.joinedAt
+    ),
     unique("organization_member_user_org_unique").on(
       table.userId,
       table.organizationId

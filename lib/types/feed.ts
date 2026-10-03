@@ -1,5 +1,4 @@
-import type { UserAnnouncement } from "@/app/actions/announcements"
-import type { OrgEvent } from "@/app/actions/events"
+import type { UserAnnouncement, OrgEvent } from "@/lib/queries"
 
 export type FeedItem =
   | {

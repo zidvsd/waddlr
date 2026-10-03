@@ -1,8 +1,12 @@
-"use server"
-
+import { cacheLife, cacheTag } from "next/cache"
+import { and, asc, desc, eq, gte } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { event, organization, organizationMember } from "@/lib/db/schema"
-import { and, asc, eq, gte, desc } from "drizzle-orm"
+import {
+  cacheTags,
+  organizationEventsTag,
+  userUpcomingEventsTag,
+} from "./cache-tags"
 
 export type UserEvent = {
   status: "going" | "interested" | "not_going" | null
@@ -40,28 +44,28 @@ export async function getUpcomingEventsForUser(
   userId: string,
   opts: { limit?: number } = {}
 ) {
-  const limit = opts.limit ?? 4
+  return getCachedUpcomingEventsForUser(userId, opts.limit ?? 4)
+}
 
-  return await db
+async function getCachedUpcomingEventsForUser(userId: string, limit: number) {
+  "use cache"
+  cacheLife("seconds")
+  cacheTag(cacheTags.events, userUpcomingEventsTag(userId))
+
+  return db
     .select({
       id: event.id,
       organizationId: event.organizationId,
-
       title: event.title,
       description: event.description,
       location: event.location,
       thumbnailUrl: event.thumbnailUrl,
-
       startsAt: event.startsAt,
       endsAt: event.endsAt,
-
       status: event.status,
       createdBy: event.createdBy,
-
       createdAt: event.createdAt,
       updatedAt: event.updatedAt,
-
-      // Organization information
       organizationName: organization.name,
       organizationSlug: organization.slug,
     })
@@ -81,13 +85,23 @@ export async function getUpcomingEventsForUser(
     .orderBy(asc(event.startsAt))
     .limit(limit)
 }
+
 export async function getOrgEvents(
   organizationId: string,
   opts: { limit?: number } = {}
 ): Promise<OrgEvent[]> {
-  const limit = opts.limit ?? 20
+  return getCachedOrgEvents(organizationId, opts.limit ?? 20)
+}
 
-  return await db
+async function getCachedOrgEvents(
+  organizationId: string,
+  limit: number
+): Promise<OrgEvent[]> {
+  "use cache"
+  cacheLife("minutes")
+  cacheTag(cacheTags.events, organizationEventsTag(organizationId))
+
+  return db
     .select({
       id: event.id,
       title: event.title,

@@ -10,6 +10,7 @@ high school orgs. It replaces the Facebook + Messenger + Google Forms + Excel
 stack most orgs currently duct-tape together.
 
 Two core users:
+
 - **Students** — discover orgs, keep track of events/announcements, browse a
   cross-org "Feed" instead of being buried in group chats.
 - **Officers** — run one org dashboard instead of five disconnected tools.
@@ -74,16 +75,17 @@ silently.
 
 Brand palette, exposed as both semantic tokens and raw brand colors:
 
-| Token | Role |
-|---|---|
-| `--primary` (Indigo) | primary actions, links |
-| `--sunbeam` | sparing "pop" accent — badges, highlights, never body text |
-| `--sky` | secondary accent, event/calendar-related UI |
-| `--violet` | gradient partner to primary |
-| `--charcoal` | fixed dark surface (e.g. CTA bands), not tied to light/dark mode |
-| `--mist` | soft off-white surface / muted backgrounds |
+| Token                | Role                                                             |
+| -------------------- | ---------------------------------------------------------------- |
+| `--primary` (Indigo) | primary actions, links                                           |
+| `--sunbeam`          | sparing "pop" accent — badges, highlights, never body text       |
+| `--sky`              | secondary accent, event/calendar-related UI                      |
+| `--violet`           | gradient partner to primary                                      |
+| `--charcoal`         | fixed dark surface (e.g. CTA bands), not tied to light/dark mode |
+| `--mist`             | soft off-white surface / muted backgrounds                       |
 
 Helper classes already defined — use these instead of re-deriving them:
+
 - `.section-padding` / `.section-padding-sm` — responsive vertical rhythm
 - `.bg-gradient-brand` / `.text-gradient-brand` — hero/CTA only, never on
   body copy or dense data tables

@@ -1,6 +1,6 @@
 {
-  "id": "e0c303b9-7862-48c3-b03e-af72b2b458d4",
-  "prevId": "6fa68bd7-92bd-42a8-84a6-639ce13e1d6f",
+  "id": "350604d7-d3c2-4cbd-b8d3-4276a0518d87",
+  "prevId": "e0c303b9-7862-48c3-b03e-af72b2b458d4",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -429,23 +429,7 @@
           "default": false
         }
       },
-      "indexes": {
-        "profile_userId_idx": {
-          "name": "profile_userId_idx",
-          "columns": [
-            {
-              "expression": "user_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
+      "indexes": {},
       "foreignKeys": {
         "profile_user_id_user_id_fk": {
           "name": "profile_user_id_user_id_fk",
@@ -503,6 +487,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "header_url": {
+          "name": "header_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
         "visibility": {
           "name": "visibility",
           "type": "organization_visibility",
@@ -517,7 +507,7 @@
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
-          "default": "'approval'"
+          "default": "'approval_required'"
         },
         "owner_id": {
           "name": "owner_id",
@@ -546,21 +536,6 @@
           "columns": [
             {
               "expression": "owner_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "organization_slug_idx": {
-          "name": "organization_slug_idx",
-          "columns": [
-            {
-              "expression": "slug",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -663,11 +638,23 @@
           "method": "btree",
           "with": {}
         },
-        "organization_member_organizationId_idx": {
-          "name": "organization_member_organizationId_idx",
+        "organization_member_organizationId_role_idx": {
+          "name": "organization_member_organizationId_role_idx",
           "columns": [
             {
               "expression": "organization_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "role",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "joined_at",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -766,7 +753,29 @@
           "default": "now()"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "announcement_organization_created_at_idx": {
+          "name": "announcement_organization_created_at_idx",
+          "columns": [
+            {
+              "expression": "organization_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
       "foreignKeys": {
         "announcement_organization_id_organization_id_fk": {
           "name": "announcement_organization_id_organization_id_fk",
@@ -883,7 +892,62 @@
           "default": "now()"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "event_organization_status_starts_at_idx": {
+          "name": "event_organization_status_starts_at_idx",
+          "columns": [
+            {
+              "expression": "organization_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "starts_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "event_organization_status_created_at_idx": {
+          "name": "event_organization_status_created_at_idx",
+          "columns": [
+            {
+              "expression": "organization_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
       "foreignKeys": {
         "event_organization_id_organization_id_fk": {
           "name": "event_organization_id_organization_id_fk",
@@ -920,7 +984,7 @@
     "public.organization_join_policy": {
       "name": "organization_join_policy",
       "schema": "public",
-      "values": ["open", "approval", "invite_only"]
+      "values": ["open", "approval_required", "invite_only"]
     },
     "public.organization_role": {
       "name": "organization_role",

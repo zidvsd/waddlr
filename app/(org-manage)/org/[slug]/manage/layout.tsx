@@ -1,4 +1,5 @@
-// layout.tsx
+import { Suspense } from "react"
+
 import { AppSidebar } from "@/components/layout/sidebar/app-sidebar"
 import {
   SidebarInset,
@@ -13,10 +14,28 @@ import {
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb"
 import { getServerSession } from "@/lib/auth/get-session"
-import { getUserOrganizations } from "@/app/actions/organizations"
+import { getUserOrganizations } from "@/lib/queries"
 import { redirect } from "next/navigation"
+export const instant = false
+export default function OrgLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode
+  params: Promise<{ slug: string }>
+}) {
+  return (
+    <Suspense
+      fallback={<div className="min-h-screen animate-pulse bg-background" />}
+    >
+      <AuthenticatedOrgLayout params={params}>
+        {children}
+      </AuthenticatedOrgLayout>
+    </Suspense>
+  )
+}
 
-export default async function OrgLayout({
+async function AuthenticatedOrgLayout({
   children,
   params,
 }: {
@@ -24,12 +43,18 @@ export default async function OrgLayout({
   params: Promise<{ slug: string }>
 }) {
   const session = await getServerSession()
-  if (!session) redirect("/login")
+
+  if (!session) {
+    redirect("/login")
+  }
 
   const { slug } = await params
+
   const userOrgs = await getUserOrganizations(session.user.id)
 
-  if (userOrgs.length === 0) redirect("/onboarding")
+  if (userOrgs.length === 0) {
+    redirect("/onboarding")
+  }
 
   return (
     <SidebarProvider>
@@ -42,11 +67,14 @@ export default async function OrgLayout({
           avatar: session.user.image ?? "",
         }}
       />
+
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 border-b">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
+
             <Separator orientation="vertical" className="h-4" />
+
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
@@ -56,6 +84,7 @@ export default async function OrgLayout({
             </Breadcrumb>
           </div>
         </header>
+
         <main className="flex-1 p-4">{children}</main>
       </SidebarInset>
     </SidebarProvider>

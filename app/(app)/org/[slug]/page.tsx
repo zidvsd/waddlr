@@ -1,10 +1,12 @@
-import { getOrganizationBySlug } from "@/app/actions/organizations"
-import { getOrgAnnouncements } from "@/app/actions/announcements"
-import { getOrgEvents } from "@/app/actions/events"
+import {
+  getOrgAnnouncements,
+  getOrgEvents,
+  getOrgMembers,
+  getOrganizationBySlug,
+} from "@/lib/queries"
 import { getServerSession } from "@/lib/auth/get-session"
 import { notFound } from "next/navigation"
 import { OrgFeed } from "@/components/OrgFeed"
-import { getOrgMembers } from "@/app/actions/members"
 export default async function OrgPage({
   params,
 }: {
@@ -19,7 +21,7 @@ export default async function OrgPage({
   const [announcements, events, members] = await Promise.all([
     getOrgAnnouncements(org.id, { limit: 20 }),
     getOrgEvents(org.id, { limit: 20 }),
-    getOrgMembers(org.id, { limit: 20})
+    getOrgMembers(org.id, { limit: 20 }),
   ])
 
   return (

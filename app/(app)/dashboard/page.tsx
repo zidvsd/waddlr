@@ -1,9 +1,11 @@
 import Link from "next/link"
 import { AnnouncementCard } from "@/components/cards/AnnouncementCard"
 import { ArrowRight } from "lucide-react"
-import { getUserOrganizations } from "../../actions/organizations"
-import { getUpcomingEventsForUser } from "../../actions/events"
-import { getRecentAnnouncementsForUser } from "@/app/actions/announcements"
+import {
+  getRecentAnnouncementsForUser,
+  getUpcomingEventsForUser,
+  getUserOrganizations,
+} from "@/lib/queries"
 import { getServerSession } from "@/lib/auth/get-session"
 import { EmptyEvent } from "@/components/ui/empty-event"
 import { EmptyOrganization } from "@/components/ui/empty-organization"
